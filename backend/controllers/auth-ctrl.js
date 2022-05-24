@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const model = require("../models");
+require("dotenv").config();
 console.log(model.user);
 const User = model.user;
 
@@ -36,4 +37,38 @@ exports.signup = async (req, res, next) => {
     })
     .catch((err) => res.status(500).json({ message: "Problème", err }));
 };
-exports.login = (req, res, next) => {};
+exports.login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  if (email == null || password == null) {
+    return res.status(400).json({ error: "missing parameters" });
+  }
+
+  User.findOne({
+    where: { email: email },
+  })
+    .then((userFound) => {
+      console.log(userFound.password);
+      console.log(userFound.email);
+      console.log(userFound.id);
+      if (userFound) {
+        bcrypt
+          .compare(password, userFound.password)
+          .then((valid) => {
+            if (!valid) {
+              return res.status(401).json({ message: "mot de pass incorrect" });
+            }
+            return res.status(200).json({
+              user: userFound.id,
+              token: jwt.sign({ userId: userFound.id }, process.env.TOKEN, {
+                expiresIn: "24h",
+              }),
+            });
+          })
+          .catch((err) => res.status(500).json({ err }));
+      }
+    })
+    .catch((err) =>
+      res.status(500).json({ error: "unable to verify user", err })
+    );
+};
