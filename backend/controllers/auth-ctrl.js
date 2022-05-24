@@ -2,7 +2,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const model = require("../models");
 require("dotenv").config();
-console.log(model.user);
 const User = model.user;
 
 exports.signup = async (req, res, next) => {
@@ -48,9 +47,6 @@ exports.login = async (req, res, next) => {
     where: { email: email },
   })
     .then((userFound) => {
-      console.log(userFound.password);
-      console.log(userFound.email);
-      console.log(userFound.id);
       if (userFound) {
         bcrypt
           .compare(password, userFound.password)
