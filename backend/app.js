@@ -3,6 +3,7 @@ const path = require("path");
 require("dotenv").config({ path: "./config/.env" });
 const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
+const authRoute = require("./routes/auth-route");
 
 const app = express();
 
@@ -40,5 +41,5 @@ app.get("/", (req, res) => {
 });
 
 // Route user
-
+app.use("/api/auth", authRoute);
 module.exports = app;
