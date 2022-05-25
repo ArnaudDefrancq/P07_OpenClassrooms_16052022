@@ -1,10 +1,12 @@
 import React from "react";
+import Login from "./pages/Login/Login";
+
 
 const App = () => {
   return (
-    <div>
-      <h1>Bonjour</h1>
-    </div>
+    <>
+    <Login />
+    </>
   );
 };
 

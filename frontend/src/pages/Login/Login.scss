@@ -1,0 +1,28 @@
+@import "../../style/settings.scss";
+
+// font
+@font-face {
+    font-family: "robotoSlap";
+    src: url("../../font/static/RobotoSlab-Regular.ttf");
+}
+
+* {
+    font-family: "robotoSlap";
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    background: $primary-color;
+    overflow: hidden;
+  }
+
+main {
+    display: flex;
+    justify-content: center;
+
+    height: 100vh;
+   
+}
