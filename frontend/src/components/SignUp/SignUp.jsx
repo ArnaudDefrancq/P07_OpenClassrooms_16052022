@@ -22,6 +22,7 @@ const SignUp = () => {
                 <button type="submit" value="Inscription">Insciption</button>
 
             </form>
+            <p>Pas encore inscrit ?</p>
         </div>
     );
 };
