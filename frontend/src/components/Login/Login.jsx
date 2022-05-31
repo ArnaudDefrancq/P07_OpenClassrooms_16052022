@@ -1,9 +1,18 @@
 import React from 'react';
+import "./Login.scss";
 
 const Login = () => {
     return (
-        <div>
-            <h1>Se connecter</h1>
+        <div className='form-container'>
+            <h1 className='title'>Connection</h1>
+            <form>
+                <input type="email" placeholder='Adresse mail' />
+
+                <input type="text" placeholder='Mot de passe' />
+
+                <button type="submit" value="connection">Connection</button>
+            </form>
+            <p>Pas encore inscrit ?</p>
         </div>
     );
 };
