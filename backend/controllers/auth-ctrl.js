@@ -2,13 +2,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const model = require("../models");
 require("dotenv").config();
-const User = model.user;
+const User = model.User;
 
 exports.signup = async (req, res, next) => {
-  const { email, password, username } = req.body;
-  console.log(email, password, username);
+  const { email, password } = req.body;
+  console.log(email, password);
 
-  if (email == null || username == null || password == null) {
+  if (email == null || password == null) {
     return res.status(400).json({ error: "missing parameters" });
   }
 

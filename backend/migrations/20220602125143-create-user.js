@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("user", {
+    await queryInterface.createTable("Users", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,11 +10,7 @@ module.exports = {
       },
       email: {
         allowNull: false,
-        type: Sequelize.STRING,
         unique: true,
-      },
-      username: {
-        allowNull: false,
         type: Sequelize.STRING,
       },
       password: {
@@ -22,6 +18,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       isAdmin: {
+        allowNull: true,
         type: Sequelize.BOOLEAN,
         defaultValue: 0,
       },
@@ -35,7 +32,6 @@ module.exports = {
       },
     });
   },
-
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Users");
   },
