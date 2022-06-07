@@ -5,6 +5,7 @@ const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
 const authRoute = require("./routes/auth-route");
 const cors = require("cors");
+const messageRoute = require("./routes/message-route");
 
 const app = express();
 
@@ -48,5 +49,8 @@ app.get("/", (req, res) => {
 
 // Route user
 app.use("/api/auth", authRoute);
+
+// Route pour poster un message
+app.use("/api/articles", messageRoute);
 
 module.exports = app;
