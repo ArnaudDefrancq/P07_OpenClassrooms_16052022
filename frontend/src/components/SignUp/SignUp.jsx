@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {POST} from "../../components/api/axios"
 import './SignUp.scss';
 
@@ -21,7 +21,7 @@ const SignUp = () => {
 
 
       const data = {
-        email: registerEmail,   // usersurname: registerSurname.current.value,
+        email: registerEmail,
         password: registerPassword
       };
 
@@ -32,7 +32,7 @@ const SignUp = () => {
             try {
               await POST("api/auth/signup", userSignup)
               .then((res) => {
-                console.log(res);
+                console.log(res, 'inscrit');
               })
               .catch((err) => err.message)
             } catch (err) {

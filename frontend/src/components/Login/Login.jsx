@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, {useState } from 'react';
 import "./Login.scss";
 import {POST} from "../../components/api/axios";
 
@@ -50,7 +50,6 @@ const Login = () => {
 
                 <button type="submit" value="connection">Connection</button>
             </form>
-            <p>Pas encore inscrit ?</p>
         </div>
     );
 };
