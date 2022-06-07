@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import SignUp from '../SignUp/SignUp';
-import Login from "../Login/Login"
-import "./ConnectModal.scss";
+import Login from "../Login/Login";
 
 const ConnectModal = () => {
 

@@ -1,4 +1,9 @@
-@import "../../style/settings.scss";
+// Variables
+$primary-color: #FD2D01;
+$secondary-color: #FFD7D7;
+$tertiary-color: #4E5166;
+$white: #ffffff;
+$black: #000000;
 
 // font
 @font-face {
@@ -6,6 +11,7 @@
     src: url("../../font/static/RobotoSlab-Regular.ttf");
 }
 
+// Page
 * {
     font-family: "robotoSlap";
     margin: 0;

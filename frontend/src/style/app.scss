@@ -1,0 +1,66 @@
+@import "./utils/settings.scss";
+
+.connectModal {
+    margin-top: 6%;
+    height: 60%;
+    width: 20%;
+    background: $white;
+    border: 1.5px solid $black;
+    border-radius: 5px;
+    .btn-container {
+        display: flex;
+        justify-content: space-around;
+
+        .btn-1 {
+            border: none;
+            height: 100%;
+            width: 100%;
+            padding: 20px 0;
+            border-radius: 5px 0 0 0;
+        }
+        .btn-2 {
+            border: none;
+            height: 100%;
+            width: 100%;
+            padding: 20px 0;
+            border-radius: 0 5px 0 0;
+
+        }
+    }
+};
+
+.header {
+    display: flex;
+    justify-content: center;
+    height: 80px;
+    background: $white;
+    border-bottom: 2px solid $black;
+};
+
+.form-container {
+    .title {
+        text-align: center;
+        margin-top: 5%;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 5%;
+    }
+    input {
+        margin: 15px ;
+        padding: 8px 10px;
+        width: 70%;
+    }
+    button {
+        margin-top: 25px;
+        width: 40%;
+        padding: 8px 10px;
+        cursor: pointer;
+    }
+    p {
+        margin-top: 15%;
+        margin-left: 5%;
+    }
+};

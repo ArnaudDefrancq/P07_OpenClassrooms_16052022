@@ -1,5 +1,4 @@
 import React, {useState } from 'react';
-import "./Login.scss";
 import {POST} from "../../components/api/axios";
 
 const Login = () => {
