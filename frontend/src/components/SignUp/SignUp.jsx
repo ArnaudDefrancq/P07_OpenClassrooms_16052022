@@ -8,24 +8,14 @@ import './SignUp.scss';
 const SignUp = () => {
 
   const [userSignup, setUserSignup] = useState({
-    username: "",
+    pseudo: "",
     email: "",
     password: "",
   });
 
     const registerEmail = useRef();
     const registerPassword = useRef();
-
-    console.log(registerEmail);
-    console.log(registerPassword);
-
-
-      const data = {
-        email: registerEmail,
-        password: registerPassword
-      };
-
-      console.log(data);
+    const registerPseudo = useRef();
 
       const register = async(e) => {
           e.preventDefault();
@@ -46,6 +36,20 @@ const SignUp = () => {
         <div className='form-container'>
             <h1 className='title'>Inscription</h1>
             <form onSubmit={register}>
+
+                <input 
+                type="text"
+                className='input_container'
+                placeholder='Pseudo'
+                value={userSignup.pseudo}
+                onChange={(e) =>
+                  setUserSignup({
+                    ...userSignup,
+                    pseudo: e.target.value,
+                  })
+                }
+                ref={registerPseudo} 
+                required/>
              
                 <input 
                 type="email"
@@ -58,7 +62,8 @@ const SignUp = () => {
                     email: e.target.value,
                   })
                 }
-                ref={registerEmail}/>
+                ref={registerEmail}
+                required/>
 
         
                 <input 
@@ -72,13 +77,8 @@ const SignUp = () => {
                     password: e.target.value,
                   })
                 }
-                ref={registerPassword}/>
-
-              <input
-                type="password"
-                className="input_container"
-                placeholder="Confirmer le mot de passe"
-              />
+                ref={registerPassword}
+                required/>
 
             <button type="submit" value="Inscription">Insciption
             </button>
