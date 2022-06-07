@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   User.init(
     {
+      pseudo: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       isAdmin: DataTypes.BOOLEAN,
@@ -22,6 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "User",
     }
   );
-  User.sync({ alter: true });
+  // User.sync({ alter: true });
   return User;
 };

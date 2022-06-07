@@ -13,6 +13,9 @@ app.use(bodyParser.json());
 
 app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
 
+const db = require("./models");
+db.sequelize.sync();
+
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,

@@ -5,10 +5,10 @@ require("dotenv").config();
 const User = model.User;
 
 exports.signup = async (req, res, next) => {
-  const { email, password } = req.body;
+  const { email, password, pseudo } = req.body;
   console.log(email, password);
 
-  if (email == null || password == null) {
+  if (email == null || password == null || pseudo == null) {
     return res.status(400).json({ error: "missing parameters" });
   }
 
