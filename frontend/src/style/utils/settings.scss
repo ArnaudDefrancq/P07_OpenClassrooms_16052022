@@ -7,13 +7,13 @@ $black: #000000;
 
 // font
 @font-face {
-    font-family: "robotoSlap";
-    src: url("../../font/static/RobotoSlab-Regular.ttf");
+    font-family: "lato";
+    src: url("../../font/lato/Lato-Regular.ttf");
 }
 
 // Page
 * {
-    font-family: "robotoSlap";
+    font-family: "lato";
     margin: 0;
     padding: 0;
     box-sizing: border-box;
