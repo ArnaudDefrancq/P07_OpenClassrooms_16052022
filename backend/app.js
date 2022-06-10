@@ -5,7 +5,9 @@ const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
 const authRoute = require("./routes/auth-route");
 const cors = require("cors");
-const messageRoute = require("./routes/message-route");
+// const messageRoute = require("./routes/message-route");
+const Db = require("./config/db-config");
+const models = require("./models/User");
 
 const app = express();
 
@@ -14,8 +16,9 @@ app.use(bodyParser.json());
 
 app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
 
-const db = require("./models");
-db.sequelize.sync();
+Db.sync()
+  .then(console.log("connection à la bdd"))
+  .catch((err) => console.log(err));
 
 const limiter = rateLimit({
   max: 100,
@@ -50,7 +53,7 @@ app.get("/", (req, res) => {
 // Route user
 app.use("/api/auth", authRoute);
 
-// Route pour poster un message
-app.use("/api/articles", messageRoute);
+// // Route pour poster un message
+// app.use("/api/articles", messageRoute);
 
 module.exports = app;

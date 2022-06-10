@@ -1,5 +1,7 @@
 import React, { useRef, useState } from 'react';
-import {POST} from "../../components/api/axios"
+import {POST} from "../../components/api/axios";
+import { useNavigate } from 'react-router-dom';
+
 
 // const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -16,19 +18,22 @@ const SignUp = () => {
     const registerPassword = useRef();
     const registerPseudo = useRef();
 
-      const register = async(e) => {
-          e.preventDefault();
-            try {
-              await POST("api/auth/signup", userSignup)
-              .then((res) => {
-                console.log(res, 'inscrit');
-              })
-              .catch((err) => err.message)
-            } catch (err) {
-                 console.log(err.message);
-             }
-          }
-           
+    const register = async(e) => {
+      e.preventDefault();
+      try {
+        await POST("api/auth/signup", userSignup)
+          .then((res) => {
+            console.log(res, 'inscrit');
+            })
+          .catch((err) => err.message)
+            } 
+      catch (err) {console.log(err.message);}
+    };
+
+    const history = useNavigate();
+    
+
+    
         
 
     return (
@@ -79,7 +84,7 @@ const SignUp = () => {
                 ref={registerPassword}
                 required/>
 
-            <button type="submit" value="Inscription">Insciption
+            <button type="submit" value="Inscription" onClick={() => {history.push("/newfeeds")}}>Insciption
             </button>
 
             </form>

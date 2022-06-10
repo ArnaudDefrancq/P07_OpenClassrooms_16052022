@@ -1,4 +1,5 @@
 import React, {useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {POST} from "../../components/api/axios";
 
 const Login = () => {
@@ -17,7 +18,9 @@ const Login = () => {
         } catch (err) {
             console.log(err.message);
         }
-    }
+    };
+
+    const history = useNavigate();
 
     return (
         <div className='form-container'>
@@ -47,7 +50,7 @@ const Login = () => {
                 value={userLogin.password}
                 required/>
 
-                <button type="submit" value="connection">Connection</button>
+                <button type="submit" value="connection" onClick={() => {history.push("/newfeeds")}}>Connection</button>
             </form>
         </div>
     );

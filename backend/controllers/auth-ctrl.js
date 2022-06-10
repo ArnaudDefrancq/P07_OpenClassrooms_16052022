@@ -1,25 +1,22 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const model = require("../models");
+const User = require("../models/User");
 require("dotenv").config();
-const User = model.User;
+// console.log(model);
+// const User = model.User;
 
 exports.signup = async (req, res, next) => {
   const { email, password, pseudo } = req.body;
   console.log(email, password);
-
   if (email == null || password == null || pseudo == null) {
     return res.status(400).json({ error: "missing parameters" });
   }
-
   const salt = await bcrypt.genSalt(10);
   const bcryptPassword = await bcrypt.hash(password, salt);
-
   const newUser = {
     ...req.body,
     password: bcryptPassword,
   };
-
   User.findOne({
     where: { email: email },
   })
@@ -38,11 +35,9 @@ exports.signup = async (req, res, next) => {
 };
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
-
   if (email == null || password == null) {
     return res.status(400).json({ error: "missing parameters" });
   }
-
   User.findOne({
     where: { email: email },
   })

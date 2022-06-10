@@ -1,28 +1,47 @@
-"use strict";
-const { Model } = require("sequelize");
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate(models) {
-      models.User.hasMany(models.Message, { onDelete: "cascade" });
-    }
-  }
-  User.init(
-    {
-      pseudo: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      isAdmin: DataTypes.BOOLEAN,
+const DataTypes = require("sequelize");
+const db = require("../config/db-config");
+// const sequelize = new Sequelize("sqlite::memory:");
+
+const User = db.define(
+  "User",
+  {
+    // Model attributes are defined here
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER,
     },
-    {
-      sequelize,
-      modelName: "User",
-    }
-  );
-  // User.sync({ alter: true });
-  return User;
+    pseudo: {
+      allowNull: false,
+      unique: true,
+      type: DataTypes.STRING,
+    },
+    email: {
+      allowNull: false,
+      unique: true,
+      type: DataTypes.STRING,
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    isAdmin: {
+      allowNull: true,
+      type: DataTypes.BOOLEAN,
+      defaultValue: 0,
+    },
+  },
+  {
+    // Other model options go here
+  }
+);
+async () => {
+  await User.sync({ force: true });
+  console.log("The table for the User model was just (re)created!");
 };
+
+// `sequelize.define` also returns the model
+// console.log(User === sequelize.models.User); // true
+
+module.exports = User;
