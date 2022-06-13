@@ -36,6 +36,11 @@ const User = db.define(
     // Other model options go here
   }
 );
+
+User.associate = function (models) {
+  models.User.hasMany(models.Post);
+};
+
 async () => {
   await User.sync({ alter: true });
   console.log("The table for the User model was just (re)created!");

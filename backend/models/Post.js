@@ -33,10 +33,18 @@ const Post = db.define(
       type: DataTypes.STRING,
     },
   },
-  {
-    // Other model options go here
-  }
+  {}
 );
+
+Post.associate = function (models) {
+  models.Post.belongsTo(models.User, {
+    foreignKey: {
+      allowNull: false,
+      name: "usersId",
+    },
+  });
+};
+
 async () => {
   await Post.sync({ alter: true });
   console.log("The table for the User model was just (re)created!");
