@@ -6,8 +6,9 @@ const auth = require("../middleware/auth-config");
 
 router.post("/", postCtrl.createPost);
 router.get("/", postCtrl.findAllPost);
-router.get("/:id", multer, postCtrl.findOnePost);
 router.put("/:id", multer, postCtrl.modifyPost);
 router.delete("/:id", postCtrl.deletePost);
+router.patch("/like-post/:id", postCtrl.likePost);
+router.patch("/unlike-post/:id", postCtrl.unlikePost);
 
 module.exports = router;

@@ -15,8 +15,8 @@ exports.createPost = async (req, res, next) => {
     message: req.body.message,
     image: req.body.image,
     video: req.body.video,
-    likers: [],
-    comments: [],
+    likers: [""],
+    comments: [""],
   });
 
   try {
@@ -26,8 +26,6 @@ exports.createPost = async (req, res, next) => {
     res.status(400).json({ err });
   }
 };
-
-exports.findOnePost = (req, res, next) => {};
 
 exports.modifyPost = (req, res, next) => {
   if (!ObjectID.isValid(req.params.id)) {
@@ -60,4 +58,46 @@ exports.deletePost = (req, res, next) => {
     if (!err) res.send(docs);
     else console.log("error", err);
   });
+};
+
+exports.likePost = async (req, res, next) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res.status(400).send("id unknow : " + req.params.id);
+  }
+
+  try {
+    await post.findByIdAndUpdate(
+      req.params.id,
+      {
+        $addToSet: { likers: req.body.id },
+      },
+      { new: true },
+      (err, docs) => {
+        if (err) return res.status(400).send(err);
+      }
+    );
+  } catch (err) {
+    res.status(400).send(err);
+  }
+};
+
+exports.unlikePost = async (req, res, next) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res.status(400).send("id unknow : " + req.params.id);
+  }
+
+  try {
+    await post.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: { likers: req.body.id },
+      },
+      { new: true },
+      (err, docs) => {
+        if (err) return res.status(400).send(err);
+      }
+    );
+  } catch (err) {
+    res.status(400).send(err);
+  }
 };
