@@ -7,7 +7,8 @@ const authRoute = require("./routes/auth-route");
 const cors = require("cors");
 // const messageRoute = require("./routes/message-route");
 const Db = require("./config/db-config");
-const models = require("./models/User");
+const modelsUser = require("./models/User");
+const modelsPost = require("./models/Post");
 
 const app = express();
 

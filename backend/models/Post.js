@@ -1,9 +1,9 @@
 const DataTypes = require("sequelize");
 const db = require("../config/db-config");
-// const sequelize = new Sequelize("sqlite::memory:");
+// // // const sequelize = new Sequelize("sqlite::memory:");
 
-const User = db.define(
-  "User",
+const Post = db.define(
+  "Post",
   {
     // Model attributes are defined here
     id: {
@@ -12,24 +12,25 @@ const User = db.define(
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
-    pseudo: {
+    userId: {
       allowNull: false,
-      unique: true,
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      references: {
+        model: "Users",
+        key: "id",
+      },
     },
-    email: {
-      allowNull: false,
-      unique: true,
-      type: DataTypes.STRING,
-    },
-    password: {
+    title: {
       allowNull: false,
       type: DataTypes.STRING,
     },
-    isAdmin: {
+    content: {
+      allowNull: false,
+      type: DataTypes.TEXT,
+    },
+    articleUrl: {
       allowNull: true,
-      type: DataTypes.BOOLEAN,
-      defaultValue: 0,
+      type: DataTypes.STRING,
     },
   },
   {
@@ -37,11 +38,11 @@ const User = db.define(
   }
 );
 async () => {
-  await User.sync({ alter: true });
+  await Post.sync({ alter: true });
   console.log("The table for the User model was just (re)created!");
 };
 
 // `sequelize.define` also returns the model
 // console.log(User === sequelize.models.User); // true
 
-module.exports = User;
+module.exports = Post;
