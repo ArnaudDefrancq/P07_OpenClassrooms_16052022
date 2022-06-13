@@ -7,6 +7,7 @@ require("./config/db");
 
 // Les const pour les routes
 const authRoutes = require("./routes/auth-route");
+const postRoutes = require("./routes/post-route");
 
 const app = express();
 
@@ -49,6 +50,6 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 
 // // Route pour poster un message
-// app.use("/api/articles", postRoute);
+app.use("/api/post", postRoutes);
 
 module.exports = app;

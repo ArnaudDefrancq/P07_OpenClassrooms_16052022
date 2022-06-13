@@ -1,63 +1,63 @@
-const modelsPost = require("../models/Post");
+const post = require("../models/Post.model");
+const user = require("../models/User.model");
+const ObjectID = require("mongoose").Types.ObjectId;
 
-// Création d'un message
-exports.createMeassage = async (req, res, next) => {
-  const { title, content } = req.body;
-  // const userIdFound = await user.findOne({ where: { id: user.UserId } });
+exports.findAllPost = (req, res, next) => {
+  post.find((err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("error to get data" + err);
+  });
+};
 
-  if (title == null || content == null) {
-    return res.status(400).json({ error: "Veuillez remplire tous les champs" });
-  }
-
-  const newPost = new modelsPost({
-    ...req.body,
+exports.createPost = async (req, res, next) => {
+  const newPost = new post({
+    posterId: req.body.posterId,
+    message: req.body.message,
+    image: req.body.image,
+    video: req.body.video,
+    likers: [],
+    comments: [],
   });
 
-  newPost
-    .save()
-    .then(() => res.status(201).json({ message: "Article créé !" }))
-    .catch((error) => res.status(400).json({ error }));
+  try {
+    const post = await newPost.save();
+    return res.status(201).json({ post });
+  } catch (err) {
+    res.status(400).json({ err });
+  }
 };
 
-// Lire tous les messages
-exports.findAllMessage = (req, res, next) => {
-  modelsPost
-    .findAll({ order: [["createdAt", "DESC"]] })
-    .then((messages) => {
-      console.log(messages);
-      res.status(200).json(message);
-    })
-    .catch((err) => res.status(400).json({ err }));
-};
+exports.findOnePost = (req, res, next) => {};
 
-// Sélectionner un message
-exports.findOneMessage = (req, res, next) => {
-  modelsPost
-    .findOne({ where: { id: req.params.id } })
-    .then((Post) => {
-      res.status(200).json({ Post });
-    })
-    .catch((err) => res.status(404).json({ err }));
-};
-
-// Modifier un message
-exports.modifyMessage = (req, res, next) => {
-  const { title, content } = req.body;
-
-  if (title === null || content === null) {
-    return res.status(400).json({
-      error:
-        "Veuillez remplir les champs 'Titre' et 'Contenu' pour créer un article",
-    });
+exports.modifyPost = (req, res, next) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res.status(400).send("id unknow : " + req.params.id);
   }
 
-  const articleObject = req.body;
+  const updatedPost = {
+    message: req.body.message,
+  };
 
-  modelsPost
-    .update(
-      { ...articleObject, id: req.params.id },
-      { where: { id: req.params.id } }
-    )
-    .then(() => res.status(200).json({ message: "Article modifié !" }))
-    .catch((error) => res.status(400).json({ error }));
+  post.findByIdAndUpdate(
+    req.params.id,
+    {
+      $set: updatedPost,
+    },
+    { new: true },
+    (err, docs) => {
+      if (!err) res.send(docs);
+      else console.log("update error" + err);
+    }
+  );
+};
+
+exports.deletePost = (req, res, next) => {
+  if (!ObjectID.isValid(req.params.id)) {
+    return res.status(400).send("id unknow : " + req.params.id);
+  }
+
+  post.findByIdAndDelete(req.params.id, (err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("error", err);
+  });
 };
