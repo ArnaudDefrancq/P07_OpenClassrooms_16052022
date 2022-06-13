@@ -1,25 +1,19 @@
 const express = require("express");
-const path = require("path");
 require("dotenv").config({ path: "./config/.env" });
 const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
-const authRoute = require("./routes/auth-route");
 const cors = require("cors");
-const postRoute = require("./routes/post-route");
-const Db = require("./config/db-config");
-const modelsUser = require("./models/User");
-const modelsPost = require("./models/Post");
+require("./config/db");
+
+// Les const pour les routes
+const authRoutes = require("./routes/auth-route");
 
 const app = express();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
-
-Db.sync()
-  .then(console.log("connection à la bdd"))
-  .catch((err) => console.log(err));
+app.use(cors({ credentials: true, origin: "*" }));
 
 const limiter = rateLimit({
   max: 100,
@@ -32,7 +26,7 @@ app.use(limiter);
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3001");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"
@@ -52,9 +46,9 @@ app.get("/", (req, res) => {
 });
 
 // Route user
-app.use("/api/auth", authRoute);
+app.use("/api/auth", authRoutes);
 
 // // Route pour poster un message
-app.use("/api/articles", postRoute);
+// app.use("/api/articles", postRoute);
 
 module.exports = app;
