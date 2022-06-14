@@ -14,7 +14,7 @@ exports.createPost = async (req, res, next) => {
   const newPost = new post({
     posterId: req.body.posterId,
     message: req.body.message,
-    image: req.body.image,
+    image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
     video: req.body.video,
     likers: [""],
     comments: [""],
@@ -33,9 +33,14 @@ exports.modifyPost = (req, res, next) => {
     return res.status(400).send("id unknow : " + req.params.id);
   }
 
-  const updatedPost = {
-    message: req.body.message,
-  };
+  const updatedPost = req.file
+    ? {
+        ...JSON.parse(req.body.sauce),
+        imageUrl: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+      }
+    : { ...req.body };
 
   post.findByIdAndUpdate(
     req.params.id,
