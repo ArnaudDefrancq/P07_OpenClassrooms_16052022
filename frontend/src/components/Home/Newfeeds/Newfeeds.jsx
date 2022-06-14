@@ -1,15 +1,29 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import axios from "axios";
+import CardPost from "./CardPost";
 
-const Newfeeds = ({authorized}) => {
+const Newfeeds = () => {
 
-    if (authorized) {
-        return <Navigate to="/" />
-    }
+    const [loadPost, setLoadPost] = useState([])
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API_URL}api/post`)
+        .then((res) => setLoadPost(res.data))
+        .catch((err) => console.log(err))
+    }, [])
 
     return (
         <div>
-            <form></form>
+            <h1>fil d'actu</h1>
+            <ul>
+                {
+                    loadPost.map((post, index) => {
+                        return <CardPost key={index} post={post} />
+                    })
+                }
+            </ul>
         </div>
     );
 };
