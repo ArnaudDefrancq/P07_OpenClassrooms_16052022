@@ -40,16 +40,6 @@ exports.login = async (req, res, next) => {
           if (!valid) {
             return res.status(401).json({ message: "mot de passe incorrecte" });
           }
-          res.cookie(
-            "jwt",
-            {
-              userId: user._id,
-              token: jwt.sign({ userId: user._id }, process.env.TOKEN, {
-                expiresIn: "24h",
-              }),
-            },
-            { httpOnly: true, maxAge: "24h" }
-          );
           res.status(200).json({
             message: "Connecter",
             userId: user._id,
@@ -58,9 +48,9 @@ exports.login = async (req, res, next) => {
             }),
           });
         })
-        .catch((err) => res.status(500).json({ err }));
+        .catch((err) => res.status(500).json({ error: "probleme1", err }));
     })
-    .catch((err) => res.status(500).json({ err }));
+    .catch((err) => res.status(500).json({ error: "probleme2", err }));
 };
 
 module.exports.logout = (req, res) => {
