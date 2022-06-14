@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
-import {POST} from "../../api/axios";
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState } from 'react';
+import SignIn from '../SignIn/SignIn'
+
 
 
 // const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -8,87 +9,89 @@ import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 
-  const [userSignup, setUserSignup] = useState({
-    pseudo: "",
-    email: "",
-    password: "",
-  });
+  const [formSubmit, setFormSubmit] = useState(false);
+  const [pseudo, setPseudo] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    const registerEmail = useRef();
-    const registerPassword = useRef();
-    const registerPseudo = useRef();
 
-    const register = async(e) => {
-      e.preventDefault();
-      try {
-        await POST("api/auth/signup", userSignup)
-          .then((res) => {
-            console.log(res, 'inscrit');
-            })
-          .catch((err) => err.message)
-            } 
-      catch (err) {console.log(err.message);}
-    };
+  const handleSubmit = async (e) => {
+    
+    e.preventDefault();
 
-    const history = useNavigate();
+    await axios({
+      method: "POST",
+      url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
+      data: {
+        pseudo,
+        email,
+        password
+      }
+    })
+    .then((res) => {
+      if (res) {
+        setFormSubmit(true);
+      }
+    })
+    .catch((err) => console.log(err))
+
+  };
     
 
     
         
 
     return (
-        <div className='form-container'>
+        <>
+        {formSubmit ?
+        (<>
+         <SignIn />
+         <h2>Vous êtes incrit ! Veulliez vous connecter !</h2>
+        </>
+        ) : (
+      <div className='form-container'>
             <h1 className='title'>Inscription</h1>
-            <form onSubmit={register}>
+            <form onSubmit={handleSubmit}>
 
                 <input 
                 type="text"
                 className='input_container'
-                placeholder='Pseudo'
-                value={userSignup.pseudo}
-                onChange={(e) =>
-                  setUserSignup({
-                    ...userSignup,
-                    pseudo: e.target.value,
-                  })
-                }
-                ref={registerPseudo} 
+                placeholder='Pseudo' 
+                onChange={(e) => {
+                  setPseudo(e.target.value)
+                }}
+                value={pseudo}
                 required/>
              
                 <input 
                 type="email"
                 className="input_container"
                 placeholder="Adresse email"
-                value={userSignup.email}
-                onChange={(e) =>
-                  setUserSignup({
-                    ...userSignup,
-                    email: e.target.value,
-                  })
-                }
-                ref={registerEmail}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                }}
+                value={email}
                 required/>
+                <div id='emailError'></div>
 
         
                 <input 
                 type="password"
                 className="input_container"
                 placeholder="Mot de passe"
-                value={userSignup.password}
-                onChange={(e) =>
-                  setUserSignup({
-                    ...userSignup,
-                    password: e.target.value,
-                  })
-                }
-                ref={registerPassword}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                }}
+                value={password}
                 required/>
 
-            <button type="submit" value="Inscription" onClick={() => {history.push("/newfeeds")}}>Insciption
+            <button type="submit" value="Inscription">Insciption
             </button>
 
             </form>
         </div>
+        )}
+        </>
     );
 };
 

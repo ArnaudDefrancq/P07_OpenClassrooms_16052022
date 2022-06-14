@@ -1,7 +1,7 @@
 const Axios = require("axios");
 
-Axios.defaults.baseURL = "http://localhost:3000/";
-Axios.defaults.headers.post["Content-Type"] = "x-www-form-urlencoded";
+Axios.defaults.baseURL = "http://localhost:5000/";
+Axios.defaults.headers.post["Content-Type"] = "JSON";
 Axios.defaults.timeout = 6000;
 Axios.defaults.withCredentials = true;
 

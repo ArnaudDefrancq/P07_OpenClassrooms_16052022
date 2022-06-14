@@ -1,4 +1,4 @@
-import React from "react";
+import React  from "react";
 import Route from "./components/Route";
 
 
@@ -6,7 +6,7 @@ import Route from "./components/Route";
 const App = () => {
   return (
     <>
-     <Route />
+      <Route />
     </>
   );
 };
