@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../components/Header/Header';
-import Newfeeds from '../../components/Newfeeds/Newfeeds';
+import Newfeeds from '../../components/Home/Newfeeds/Newfeeds';
 
 
 const NewFeed = () => {

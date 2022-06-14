@@ -1,5 +1,5 @@
 import React from 'react';
-import ConnectModal from '../../components/ConnectModal/ConnectModal';
+import ConnectModal from '../../components/LoginComponents/ConnectModal/ConnectModal';
 import Header from '../../components/Header/Header';
 
 

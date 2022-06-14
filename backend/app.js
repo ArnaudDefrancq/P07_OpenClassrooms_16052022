@@ -14,7 +14,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(cors({ credentials: true, origin: "*" }));
+app.use(cors({ credentials: true, origin: process.env.CLIENT_URL }));
 
 const limiter = rateLimit({
   max: 100,
@@ -27,7 +27,7 @@ app.use(limiter);
 app.use(express.json());
 
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", process.env.CLIENT_URL);
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content, Accept, Content-Type, Authorization"

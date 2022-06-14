@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {POST} from "../../components/api/axios";
+import {POST} from "../../api/axios";
 
 const Login = () => {
 

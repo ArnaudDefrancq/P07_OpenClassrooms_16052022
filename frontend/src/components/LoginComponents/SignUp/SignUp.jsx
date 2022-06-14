@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {POST} from "../../components/api/axios";
+import {POST} from "../../api/axios";
 import { useNavigate } from 'react-router-dom';
 
 
