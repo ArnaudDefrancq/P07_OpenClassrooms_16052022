@@ -1,68 +1,87 @@
-const post = require("../models/Post.model");
+const Post = require("../models/Post.model");
 const ObjectID = require("mongoose").Types.ObjectId;
+const fs = require("fs");
+const { promisify } = require("util");
+const pipeline = promisify(require("stream").pipeline);
+const { uploadErrors } = require("../utils/errors.utils");
 
 exports.findAllPost = (req, res, next) => {
-  post
-    .find((err, docs) => {
-      if (!err) res.send(docs);
-      else console.log("error to get data" + err);
-    })
-    .sort({ createdAt: -1 });
+  Post.find((err, docs) => {
+    if (!err) res.send(docs);
+    else console.log("Error to get data : " + err);
+  }).sort({ createdAt: -1 });
 };
 
 exports.createPost = async (req, res, next) => {
-  const newPost = new post({
+  let fileName;
+
+  if (req.file !== null) {
+    try {
+      if (
+        req.file.detectedMimeType != "image/jpg" &&
+        req.file.detectedMimeType != "image/png" &&
+        req.file.detectedMimeType != "image/jpeg"
+      )
+        throw Error("invalid file");
+
+      if (req.file.size > 500000) throw Error("max size");
+    } catch (err) {
+      const errors = uploadErrors(err);
+      return res.status(201).json({ errors });
+    }
+    fileName = req.body.posterId + Date.now() + ".jpg";
+
+    await pipeline(
+      req.file.stream,
+      fs.createWriteStream(
+        `${__dirname}/../client/public/uploads/posts/${fileName}`
+      )
+    );
+  }
+
+  const newPost = new Post({
     posterId: req.body.posterId,
     message: req.body.message,
-    image: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    picture: req.file !== null ? "./uploads/posts/" + fileName : "",
     video: req.body.video,
-    likers: [""],
-    comments: [""],
+    likers: [],
+    comments: [],
   });
 
   try {
     const post = await newPost.save();
-    return res.status(201).json({ post });
+    return res.status(201).json(post);
   } catch (err) {
-    res.status(400).json({ err });
+    return res.status(400).send(err);
   }
 };
 
 exports.modifyPost = (req, res, next) => {
-  if (!ObjectID.isValid(req.params.id)) {
-    return res.status(400).send("id unknow : " + req.params.id);
-  }
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
 
-  const updatedPost = req.file
-    ? {
-        ...JSON.parse(req.body.sauce),
-        imageUrl: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
-        }`,
-      }
-    : { ...req.body };
+  const updatedRecord = {
+    message: req.body.message,
+  };
 
-  post.findByIdAndUpdate(
+  Post.findByIdAndUpdate(
     req.params.id,
-    {
-      $set: updatedPost,
-    },
+    { $set: updatedRecord },
     { new: true },
     (err, docs) => {
       if (!err) res.send(docs);
-      else console.log("update error" + err);
+      else console.log("Update error : " + err);
     }
   );
 };
 
 exports.deletePost = (req, res, next) => {
-  if (!ObjectID.isValid(req.params.id)) {
-    return res.status(400).send("id unknow : " + req.params.id);
-  }
+  if (!ObjectID.isValid(req.params.id))
+    return res.status(400).send("ID unknown : " + req.params.id);
 
-  post.findByIdAndDelete(req.params.id, (err, docs) => {
+  Post.findByIdAndRemove(req.params.id, (err, docs) => {
     if (!err) res.send(docs);
-    else console.log("error", err);
+    else console.log("Delete error : " + err);
   });
 };
 

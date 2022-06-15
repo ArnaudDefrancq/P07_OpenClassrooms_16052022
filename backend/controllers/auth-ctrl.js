@@ -1,56 +1,40 @@
 const User = require("../models/User.model");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+const { signUpErrors, signInErrors } = require("../utils/errors.utils");
 
-exports.signup = async (req, res, next) => {
+const maxAge = 3 * 24 * 60 * 60 * 1000;
+
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.TOKEN, {
+    expiresIn: maxAge,
+  });
+};
+
+module.exports.signup = async (req, res) => {
+  const { pseudo, email, password } = req.body;
+
   try {
-    await bcrypt
-      .hash(req.body.password, 10)
-      .then((hash) => {
-        const user = new User({
-          ...req.body,
-          password: hash,
-        });
-        user
-          .save()
-          .then(() =>
-            res
-              .status(201)
-              .json({ message: "Utilisateur crée", userId: user._id })
-          )
-          .catch((error) => res.status(400).json({ error }));
-      })
-      .catch((error) => res.status(500).json({ error }));
+    const user = await User.create({ pseudo, email, password });
+    res.status(201).json({ user: user._id });
   } catch (err) {
-    return res.status(200).json({ err });
+    const errors = signUpErrors(err);
+    res.status(200).send({ errors });
   }
 };
-exports.login = async (req, res, next) => {
+
+module.exports.login = async (req, res) => {
   const { email, password } = req.body;
 
-  await User.findOne({ email: email })
-    .then((user) => {
-      if (!user) {
-        return res.status(401).json({ message: "utilisateur non trouver" });
-      }
-      bcrypt
-        .compare(password, user.password)
-        .then((valid) => {
-          if (!valid) {
-            return res.status(401).json({ message: "mot de passe incorrecte" });
-          }
-          res.status(200).json({
-            message: "Connecter",
-            userId: user._id,
-            token: jwt.sign({ userId: user._id }, process.env.TOKEN, {
-              expiresIn: "24h",
-            }),
-          });
-        })
-        .catch((err) => res.status(500).json({ error: "probleme1", err }));
-    })
-    .catch((err) => res.status(500).json({ error: "probleme2", err }));
+  try {
+    const user = await User.login(email, password);
+    const token = createToken(user._id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge });
+    res.status(200).json({ user: user._id });
+  } catch (err) {
+    const errors = signInErrors(err);
+    res.status(200).json({ errors });
+  }
 };
 
 module.exports.logout = (req, res) => {
