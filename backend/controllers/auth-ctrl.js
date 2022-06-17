@@ -1,43 +1,83 @@
-const User = require("../models/User.model");
+//Import
+const bcrypt = require("bcrypt");
+const models = require("../models");
+const userModel = models.User;
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
-const { signUpErrors, signInErrors } = require("../utils/errors.utils");
+const fs = require("fs");
 
-const maxAge = 3 * 24 * 60 * 60 * 1000;
+//Création d'un user
+exports.signup = (req, res) => {
+  // Valider les paramètres de la requète
+  const { email, pseudo, password } = req.body;
 
-const createToken = (id) => {
-  return jwt.sign({ id }, process.env.TOKEN, {
-    expiresIn: maxAge,
-  });
-};
-
-module.exports.signup = async (req, res) => {
-  const { pseudo, email, password } = req.body;
-
-  try {
-    const user = await User.create({ pseudo, email, password });
-    res.status(201).json({ user: user._id });
-  } catch (err) {
-    const errors = signUpErrors(err);
-    res.status(200).send({ errors });
+  if (email == null || pseudo == null || password == null) {
+    res.status(400).json({ error: "il manque un paramètre" });
   }
+
+  userModel
+    .findOne({
+      attributes: ["email"],
+      where: { email: email },
+    })
+    .then((user) => {
+      if (!user) {
+        bcrypt
+          .hash(password, 10)
+          .then((hash) => {
+            const newUser = new userModel({
+              ...req.body,
+              password: hash,
+            });
+            newUser
+              .save()
+              .then(() => res.status(201).json({ message: "Utilisateur crée" }))
+              .catch((error) => res.status(400).json({ error }));
+          })
+          .catch((err) => {
+            res.status(500).json({ err });
+          });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ err });
+    });
 };
 
-module.exports.login = async (req, res) => {
+//Login d'un user
+exports.login = (req, res) => {
+  //Récupération et validation des paramètres
   const { email, password } = req.body;
-
-  try {
-    const user = await User.login(email, password);
-    const token = createToken(user._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge });
-    res.status(200).json({ user: user._id });
-  } catch (err) {
-    const errors = signInErrors(err);
-    res.status(200).json({ errors });
+  if (email == null || password == null) {
+    res.status(400).json({ error: "Il manque un paramètre" });
   }
-};
-
-module.exports.logout = (req, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
+  //Vérification si user existe
+  userModel
+    .findOne({
+      where: { email: email },
+    })
+    .then((user) => {
+      if (user) {
+        bcrypt
+          .compare(password, user.password)
+          .then((valid) => {
+            if (!valid) {
+              return res.status(401).json({ error: "mauvais MDP" });
+            }
+            res.status(200).json({
+              userId: user.id,
+              token: jwt.sign({ userId: user.id }, process.env.TOKEN, {
+                expiresIn: "1h",
+              }),
+            });
+          })
+          .catch((err) => {
+            return res.status(500).json({ err });
+          });
+      } else {
+        res.status(404).json({ erreur: "Cet utilisateur n'existe pas" });
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({ err });
+    });
 };
