@@ -23,9 +23,9 @@ const SignUp = () => {
       method: "POST",
       url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
       data: {
-        pseudo,
-        email,
-        password
+        pseudo: pseudo,
+        email: email,
+        password: password
       }
     })
     .then((res) => {
@@ -35,11 +35,7 @@ const SignUp = () => {
     })
     .catch((err) => console.log(err))
 
-  };
-    
-
-    
-        
+  };  
 
     return (
         <>
