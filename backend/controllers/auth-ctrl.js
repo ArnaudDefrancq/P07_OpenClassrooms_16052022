@@ -63,6 +63,12 @@ exports.login = (req, res) => {
             if (!valid) {
               return res.status(401).json({ error: "mauvais MDP" });
             }
+            res.cookie(
+              "jwt",
+              jwt.sign({ userId: user.id }, process.env.TOKEN, {
+                expiresIn: "1h",
+              })
+            );
             res.status(200).json({
               userId: user.id,
               token: jwt.sign({ userId: user.id }, process.env.TOKEN, {

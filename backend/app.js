@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const models = require("./models");
+// const { checkUser } = require("./middleware/auth-config");
 
 // Les const pour les routes
 const authRoutes = require("./routes/auth-route");
@@ -48,6 +49,9 @@ app.get("/", (req, res) => {
     message: "Hello from the express server",
   });
 });
+
+//jwt
+// app.get("*", checkUser);
 
 // Route user
 app.use("/api/auth", authRoutes);

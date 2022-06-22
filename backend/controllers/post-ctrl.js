@@ -1,10 +1,12 @@
 const model = require("../models");
 const modelPost = model.Post;
+const modelUser = model.User;
 
 exports.createPost = (req, res) => {
   delete req.body.id;
   const newPost = new modelPost({
     ...req.body,
+    UserId: req.auth.userId,
   });
 
   newPost
