@@ -14,8 +14,10 @@ const NewFeed = () => {
             <Header />
         </header>
         <main>
-            <CreatePost />
-            <Newfeeds />
+            <div className='post-container'>
+                <CreatePost />
+                <Newfeeds />
+            </div>
         </main>
         </>
     );

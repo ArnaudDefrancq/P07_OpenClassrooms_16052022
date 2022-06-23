@@ -32,21 +32,26 @@ const CreatePost = () => {
             
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <textarea 
-                cols="30" 
-                rows="10" 
-                placeholder='Message ...'
-                onChange={(e) => {
+        <div className='createPost-container'>
+            <div className='formPost-container'>
+                <div className='imageUser'>
+                </div>
+                <form onSubmit={handleSubmit} className="formCreate-container">
+                    <textarea 
+                    cols="30" 
+                    rows="10" 
+                    placeholder='Message ...'
+                    className='text-container'
+                    onChange={(e) => {
                     setMessage(e.target.value)
-                }}
-                value={message}
-                required>
-                </textarea>
+                    }}
+                    value={message}
+                    required>
+                    </textarea>
 
-                <button type="submit" value="Envoyer">Envoyer</button>
-            </form>
+                    <button type="submit" value="Envoyer" className='btn-createPost'>Envoyer</button>
+                </form>
+            </div>
         </div>
     );
 };
