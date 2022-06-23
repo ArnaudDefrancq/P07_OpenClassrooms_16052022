@@ -6,10 +6,20 @@ import CardPost from "./CardPost";
 
 const Newfeeds = () => {
 
-    const [loadPost, setLoadPost] = useState([])
+    const [loadPost, setLoadPost] = useState([]);
+
+    const user = document.cookie.split('=');
+    console.log(user[1]);
+
+    const config = {
+        headers: {
+            "authorization": `bearer ${user[1]}`
+        }
+    }
+
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API_URL}api/post`)
+        axios.get(`${process.env.REACT_APP_API_URL}api/post/`, config)
         .then((res) => setLoadPost(res.data))
         .catch((err) => console.log(err))
     }, [])
