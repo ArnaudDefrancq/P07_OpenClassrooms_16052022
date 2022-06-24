@@ -25,11 +25,11 @@ const Newfeeds = () => {
     }, [])
 
     return (
-        <div>
-            <h1>fil d'actu</h1>
-            <ul>
+        <div className='feed-container'>
+            <h1 className='feed-title'>Publication récentes</h1>      
+            <ul className='feed-list'>
                 {
-                    loadPost.map((post, index) => {
+                     loadPost.map((post, index) => {
                         return <CardPost key={index} post={post} />
                     })
                 }

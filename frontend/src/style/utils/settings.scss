@@ -19,14 +19,15 @@ $black: #000000;
     box-sizing: border-box;
 }
 
+
 body {
     width: 100%;
     background: $primary-color;
-    overflow: hidden;
+    // overflow: hidden;
   }
 
 main {
     display: flex;
     justify-content: center;
-    height: 100vh;
+    height: 100%;
 }
