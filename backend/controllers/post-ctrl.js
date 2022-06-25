@@ -17,7 +17,9 @@ exports.createPost = (req, res) => {
 
 exports.getAllPosts = (req, res) => {
   modelPost
-    .findAll()
+    .findAll({
+      order: [["createdAt", "DESC"]],
+    })
     .then((posts) => {
       res.status(200).json(posts);
     })
