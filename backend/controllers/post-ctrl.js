@@ -3,16 +3,36 @@ const modelPost = model.Post;
 const modelUser = model.User;
 
 exports.createPost = (req, res) => {
-  delete req.body.id;
-  const newPost = new modelPost({
-    ...req.body,
-    UserId: req.auth.userId,
-  });
-
-  newPost
-    .save()
-    .then(() => res.status(201).json({ message: "objet créer" }))
-    .catch((err) => res.status(400).json({ err }));
+  if (req.file) {
+    modelPost
+      .create({
+        content: req.body.content,
+        attachment: `${req.protocol}://${req.get("host")}/images/${
+          req.file.filename
+        }`,
+        UserId: req.auth.userId,
+      })
+      .then((post) =>
+        res
+          .status(201)
+          .json({ message: "Publication avec photo envoyée avec succés", post })
+      )
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  } else {
+    modelPost
+      .create({
+        content: req.body.content,
+        UserId: req.auth.userId,
+      })
+      .then((post) =>
+        res.status(201).json({ message: "Message publié avec succés", post })
+      )
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  }
 };
 
 exports.getAllPosts = (req, res) => {

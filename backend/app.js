@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 const models = require("./models");
-// const { checkUser } = require("./middleware/auth-config");
 
 // Les const pour les routes
 const authRoutes = require("./routes/auth-route");
@@ -50,15 +49,12 @@ app.get("/", (req, res) => {
   });
 });
 
-//jwt
-// app.get("*", checkUser);
-
 // Route user
 app.use("/api/auth", authRoutes);
 
 // // Route pour poster un message
 app.use("/api/post", postRoutes);
 
-// app.use("/images", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 module.exports = app;
