@@ -5,6 +5,16 @@ const userModel = models.User;
 const jwt = require("jsonwebtoken");
 const fs = require("fs");
 
+// Voir tout les user
+exports.allUsers = (req, res) => {
+  userModel
+    .findAll()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => res.status(400).json({ err }));
+};
+
 //Création d'un user
 exports.signup = (req, res) => {
   // Valider les paramètres de la requète
