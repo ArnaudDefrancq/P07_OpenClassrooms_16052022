@@ -23,7 +23,7 @@ const Newfeeds = () => {
         axios.get(`${process.env.REACT_APP_API_URL}api/post/`, config)
         .then((res) => setLoadPost(res.data))
         .catch((err) => console.log(err))
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API_URL}api/auth/`)
@@ -44,6 +44,8 @@ const Newfeeds = () => {
                                     loadUser.map((user) => {
                                         if (user.id === post.UserId) {
                                             return user.pseudo
+                                        } else {
+                                            return null
                                         }
                                     })
                                 }
@@ -53,6 +55,9 @@ const Newfeeds = () => {
                             </div>
                             <div className='post'>
                                 <p>{post.content}</p>
+                                {
+                                    post.attachment ? <img src={post.attachment} alt="user" /> : null
+                                }
                             </div>
                         </li>
                     })
