@@ -5,11 +5,10 @@ import { useState } from 'react';
 
 const CreatePost = () => {
     const [message, setMessage] = useState('');
-    // const [postPicture, setPostPicture] = useState(null);
-
+    const [postPicture, setPostPicture] = useState('');
     
     const user = document.cookie.split('=');
-    console.log(user[1]);
+    // console.log(user[1]);
 
     const config = {
         headers: {
@@ -17,29 +16,28 @@ const CreatePost = () => {
         }
     }
 
-    const data = {
-        content: message
-    }
+    const onSubmit = async (e) => {
+        e.preventDefault() 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+        const formData = new FormData();
+        formData.append('content', message);
+        formData.append('attachment', postPicture);
 
-        await axios.post(`${process.env.REACT_APP_API_URL}api/post/`, data, config)
+        await axios.post(`${process.env.REACT_APP_API_URL}api/post/`,formData , config)
         .then((res) => console.log(res))
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
+
+        console.log(formData);
         
     }
-            
 
     return (
         <div className='createPost-container'>
             <div className='formPost-container'>
                 <div className='imageUser'>
                 </div>
-                <form onSubmit={handleSubmit} className="formCreate-container">
+                <form  className="formCreate-container" onSubmit={onSubmit}>
                     <textarea 
-                    cols="30" 
-                    rows="10" 
                     placeholder='Message ...'
                     className='text-container'
                     onChange={(e) => {
@@ -48,6 +46,14 @@ const CreatePost = () => {
                     value={message}
                     required>
                     </textarea>
+
+                    <input 
+                    type="file"
+                    name='attachment'
+                    onChange={(e) => {
+                        setPostPicture(e.target.files[0])
+                    }}
+                     />
 
                     <button type="submit" value="Envoyer" className='btn-createPost'>Envoyer</button>
                 </form>
