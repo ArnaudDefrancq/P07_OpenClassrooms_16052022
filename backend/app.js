@@ -9,6 +9,7 @@ const models = require("./models");
 // Les const pour les routes
 const authRoutes = require("./routes/auth-route");
 const postRoutes = require("./routes/post-route");
+const comRoutes = require("./routes/comment-route");
 
 const app = express();
 
@@ -54,6 +55,9 @@ app.use("/api/auth", authRoutes);
 
 // // Route pour poster un message
 app.use("/api/post", postRoutes);
+
+// Route pour les commentaires
+app.use("/api/com", comRoutes);
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
