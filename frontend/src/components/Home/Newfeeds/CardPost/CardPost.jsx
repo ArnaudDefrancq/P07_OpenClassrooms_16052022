@@ -6,6 +6,8 @@ import axios from 'axios';
 import { UidContext } from '../../../AppContext';
 import { useContext } from 'react';
 import Author from './Author';
+import CreateCom from '../CardPost/CardCom/CreateCom'
+import CardCom from '../CardPost/CardCom/CardComs';
 
 
 const CardPost = ({post}) => {
@@ -83,7 +85,9 @@ const CardPost = ({post}) => {
                 <p>{uid}</p>
                 {post.UserId === uid  && (<button onClick={() => setIsUpdated(!isUpdated)}>Modifier</button>)}
                 {post.UserId === uid  && (<button  onClick={deletePost}>Supprimer</button>)}
-            </div>  
+            </div>
+            <CardCom post={post} />
+            <CreateCom post={post} />
         </div>    
     );
 };

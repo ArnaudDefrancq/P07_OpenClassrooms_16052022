@@ -36,7 +36,7 @@ const Newfeeds = () => {
                         return <CardPost post={post} key={post.id}/>
                 })
             }
-            </ul>
+            </ul>          
         </div>
     );
 };
