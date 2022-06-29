@@ -75,15 +75,24 @@ exports.login = (req, res) => {
             }
             res.cookie(
               "jwt",
-              jwt.sign({ userId: user.id }, process.env.TOKEN, {
-                expiresIn: "24h",
-              })
+              jwt.sign(
+                { userId: user.id, userPseudo: user.pseudo },
+                process.env.TOKEN,
+                {
+                  expiresIn: "24h",
+                }
+              )
             );
             res.status(200).json({
               userId: user.id,
-              token: jwt.sign({ userId: user.id }, process.env.TOKEN, {
-                expiresIn: "24h",
-              }),
+              userPseudo: user.pseudo,
+              token: jwt.sign(
+                { userId: user.id, userPseudo: user.pseudo },
+                process.env.TOKEN,
+                {
+                  expiresIn: "24h",
+                }
+              ),
             });
           })
           .catch((err) => {

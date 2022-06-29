@@ -24,6 +24,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      pseudo: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       likes: {
         type: Sequelize.STRING,
         allowNull: true,
