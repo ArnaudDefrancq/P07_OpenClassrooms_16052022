@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
+import Com from './Com';
 
 const CardComs = ({post}) => {
 
@@ -19,15 +20,14 @@ const CardComs = ({post}) => {
         .then((res) => setLoadCom(res.data))
         .catch(err => console.log(err))}        
         ,[])// eslint-disable-line react-hooks/exhaustive-deps
+
     return (
         <>
             {
                 loadCom.map((data) => {  
-                    if (post.id === data.PostId) {
-                        return <li key={data.id}>{data.content}</li>    
-                    } 
+                    return <Com post={post} data={data} key={data.id} />
                 })
-            }
+            }         
         </>
     );
 };
