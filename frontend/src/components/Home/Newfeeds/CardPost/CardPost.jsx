@@ -13,6 +13,7 @@ const CardPost = ({post}) => {
     // const [loadCom, setLoadCom] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(null);
+    const [pictureUpdate, setPictureUpdate] = useState(null);
 
     const uid = useContext(UidContext);
 
@@ -30,9 +31,12 @@ const CardPost = ({post}) => {
 
         const formData = new FormData();
         formData.append('content', textUpdate)
+        formData.append('attachment', pictureUpdate)
+
+        console.log(textUpdate);
 
 
-        await axios.put(`${process.env.REACT_APP_API_URL}api/post/update/`, formData, config)
+        await axios.put(`${process.env.REACT_APP_API_URL}api/post/update/${post.id}`, formData, config)
         .then((res) => console.log(res))
         .catch(err => console.log(err))
     }   
@@ -58,6 +62,16 @@ const CardPost = ({post}) => {
                         setTextUpdate(e.target.value)
                         }}
                         />
+
+                        <input 
+                        type="file"
+                        name='attachment'
+                        // defaultValue={post.attachment}
+                        onChange={(e) => {
+                        setPictureUpdate(e.target.files[0])
+                        }}
+                        />
+
                         <button onClick={updateItem}>Modifier</button>
                     </div>
                 )}
