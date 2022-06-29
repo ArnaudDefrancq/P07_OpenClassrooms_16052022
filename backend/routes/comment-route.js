@@ -5,6 +5,7 @@ const auth = require("../middleware/auth-config");
 
 router.post("/", auth, comsCtrl.createComs);
 router.get("/", comsCtrl.getAllComs);
-router.delete("/", comsCtrl.deleteCom);
+router.put("/update/:id", comsCtrl.updateCom);
+router.delete("/:id", comsCtrl.deleteCom);
 
 module.exports = router;
