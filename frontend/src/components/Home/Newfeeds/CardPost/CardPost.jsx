@@ -14,8 +14,8 @@ const CardPost = ({post}) => {
 
     // const [loadCom, setLoadCom] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
-    const [textUpdate, setTextUpdate] = useState(null);
-    const [pictureUpdate, setPictureUpdate] = useState(null);
+    const [textUpdate, setTextUpdate] = useState("");
+    const [pictureUpdate, setPictureUpdate] = useState("");
 
     const uid = useContext(UidContext);
 

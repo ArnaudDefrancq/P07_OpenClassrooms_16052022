@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
-const CreateCom = () => {
+const CreateCom = ({post}) => {
 
     const [comValue, setComValue] = useState([]);
 
@@ -20,7 +20,7 @@ const CreateCom = () => {
 
         const data = {
             content: comValue,
-            // PostId: `${post.id}`
+            PostId: `${post.id}`
         }
 
         console.log(data);

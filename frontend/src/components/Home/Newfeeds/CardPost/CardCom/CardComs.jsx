@@ -18,7 +18,7 @@ const CardComs = ({post}) => {
         axios.get(`${process.env.REACT_APP_API_URL}api/com`, config)
         .then((res) => setLoadCom(res.data))
         .catch(err => console.log(err))}        
-        ,[]);
+        ,[])// eslint-disable-line react-hooks/exhaustive-deps
     return (
         <>
             {
