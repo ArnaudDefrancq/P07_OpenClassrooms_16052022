@@ -41,7 +41,11 @@ const CardPost = ({post}) => {
         .catch(err => console.log(err))
     }   
 
-    const deletePost = () =>{}
+    const deletePost = () =>{
+        axios.delete(`${process.env.REACT_APP_API_URL}api/post/${post.id}`, config)
+        .then(() => console.log('post effacé'))
+        .catch(err => console.log(err));
+    }
     return (
         <div>
             <div className='publication-user'>
@@ -62,11 +66,10 @@ const CardPost = ({post}) => {
                         setTextUpdate(e.target.value)
                         }}
                         />
-
+                        {post.attachment ? <img src={post.attachment} alt="user" /> : null}
                         <input 
                         type="file"
                         name='attachment'
-                        // defaultValue={post.attachment}
                         onChange={(e) => {
                         setPictureUpdate(e.target.files[0])
                         }}
@@ -76,6 +79,7 @@ const CardPost = ({post}) => {
                     </div>
                 )}
                 <p>postID = {post.UserId}</p>
+                <p>{post.id}</p>
                 <p>{uid}</p>
                 {post.UserId === uid  && (<button onClick={() => setIsUpdated(!isUpdated)}>Modifier</button>)}
                 {post.UserId === uid  && (<button  onClick={deletePost}>Supprimer</button>)}
