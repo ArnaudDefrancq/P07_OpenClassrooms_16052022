@@ -10,6 +10,7 @@ const models = require("./models");
 const authRoutes = require("./routes/auth-route");
 const postRoutes = require("./routes/post-route");
 const comRoutes = require("./routes/comment-route");
+const userIdRoutes = require("./middleware/auth-config");
 
 const app = express();
 
@@ -58,6 +59,11 @@ app.use("/api/post", postRoutes);
 
 // Route pour les commentaires
 app.use("/api/com", comRoutes);
+
+// Route pour avoir userId
+app.get("/userId", userIdRoutes, (req, res) => {
+  res.status(200).json(req.auth);
+});
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
