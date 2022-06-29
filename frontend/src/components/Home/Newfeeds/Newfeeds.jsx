@@ -5,17 +5,25 @@ import axios from "axios";
 import Moment from "react-moment";
 import 'moment/locale/fr'
 import CreateCom from '../CreateCom/CreateCom';
+import UpdatePost from '../UpdatePost/UpdatePost';
+import { UidContext } from '../../AppContext';
+import { useContext } from 'react';
 
 const Newfeeds = () => {
 
     const [loadPost, setLoadPost] = useState([]);
     const [loadUser, setLoadUser] = useState([]);
     const [loadCom, setLoadCom] = useState([]);
-    // const [comValue, setComValue] = useState([]);
+    const [isUpdated, setIsUpdated] = useState(false);
+    const [textUpdate, setTextUpdate] = useState(null);
 
-    const user = document.cookie.split('=');
+    const uid = useContext(UidContext);
+
+    const user = document.cookie.split("=")
     // console.log(user[1]);
 
+
+//  recuperer l'userId avec le fait de trouver 1 seul
     const config = {
         headers: {
             "authorization": `bearer ${user[1]}`
@@ -41,29 +49,29 @@ const Newfeeds = () => {
         .catch(err => console.log(err))
     }, [])
 
+    const updateItem = async (e) => {
+        e.preventDefault()
 
+        const data = {
+            content: textUpdate,
+        }
 
-    // const onSubmit = async (e) => {
-    //     e.preventDefault()
+        console.log(data);
 
-    //     const formData = new FormData()
-    //     formData.append('content', loadCom)
-    //     formData.append('PostId', loadPost.id)
+        await axios.put(`${process.env.REACT_APP_API_URL}api/com/`, data, config)
+        .then((res) => console.log(res))
+        .catch(err => console.log(err))
+    }   
 
-    //     console.log(formData);
-        
-    //     await axios.post(`${process.env.REACT_APP_API_URL}api/com/`, formData, config)
-    //     .then((res) => console.log(res))
-    //     .catch(err => console.log(err))
-    // }
+    const deletePost = () =>{}
 
     return (
         <div className='feed-container'>
             <h1 className='feed-title'>Publication récentes</h1>      
             <ul className='feed-list'>
                 {
-                    loadPost.map((post, index) => {
-                        return <li key={index} className='publication'>
+                    loadPost.map((post) => {
+                        return <li key={post.id} className='publication'>
                             <div className='publication-user'>
                                 <p>{
                                     loadUser.map((user) => {
@@ -71,19 +79,39 @@ const Newfeeds = () => {
                                             return user.pseudo
                                         } else {
                                             return null
-                                        }
+                                        }   
                                     })
                                 }
                                 </p>
                                 <p className='date-post'><Moment local="fr" fromNow >{post.createdAt}</Moment></p>
 
                             </div>
-                            <div className='post'>
-                                <p>{post.content}</p>
-                                {
-                                    post.attachment ? <img src={post.attachment} alt="user" /> : null
-                                }
+
+                            {isUpdated === false && (
+                                <div className='post'>
+                                    <p>{post.content}</p>
+                                    {post.attachment ? <img src={post.attachment} alt="user" /> : null}
+                                </div>)}
+                            {isUpdated === true && (
+                                <div>
+                                    <textarea 
+                                    defaultValue={post.content}
+                                    onChange={(e) => {
+                                        setTextUpdate(e.target.value)
+                                    }}
+                                    />
+                                    <button onClick={updateItem}>Modifier</button>
+                                </div>
+                            )}
+                            <p>postID = {post.UserId}</p>
+                                {post.UserId === uid  && (<button key={user.id} onClick={() => setIsUpdated(!isUpdated)}>Modifier</button>)}
+                                {post.UserId === uid  && (<button key={user.id} onClick={deletePost}>Supprimer</button>)}
+
+                            <div>
+
+
                             </div>
+
 
                             <div>
                                 <ul>
@@ -99,6 +127,8 @@ const Newfeeds = () => {
                                 </ul>
                                 <CreateCom post={post}/>
                             </div>
+
+
                         </li>
                     })
 
