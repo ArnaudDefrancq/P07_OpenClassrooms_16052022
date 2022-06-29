@@ -51,32 +51,20 @@ exports.getAllPosts = (req, res) => {
 exports.updatePost = (req, res) => {
   const newPost = req.file
     ? {
-        content: req.body,
+        ...req.body,
         attachment: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
         }`,
-        UserId: req.auth.userId,
       }
     : {
-        content: req.body.content,
-        UserId: req.auth.userId,
+        ...req.body,
       };
 
   console.log(newPost);
 
   modelPost
-    .findOne({ where: { id: req.params.id } })
-    .then((post) => {
-      if (!post) {
-        return res.status(400).json({ message: "post non trouvé" });
-      }
-      post
-        .update({ ...newPost })
-        .then((posted) =>
-          res.status(200).json({ message: "post modifier", posted })
-        )
-        .catch((err) => res.status(400).json({ err }));
-    })
+    .update(newPost, { where: { id: req.params.id } })
+    .then((data) => res.status(200).json({ message: "post modifier", data }))
     .catch((err) => res.status(400).json({ err }));
 };
 

@@ -5,7 +5,7 @@ const authToken = require("../middleware/auth-config");
 const upload = require("../middleware/multer-config");
 
 router.post("/", authToken, upload, postCtrl.createPost);
-router.put("/update/:id", authToken, postCtrl.updatePost);
+router.put("/update/:id", authToken, upload, postCtrl.updatePost);
 router.get("/", authToken, postCtrl.getAllPosts);
 router.delete("/:id", authToken, postCtrl.deletePost);
 
