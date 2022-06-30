@@ -1,0 +1,28 @@
+@font-face {
+  font-family: "lato";
+  src: url("../../font/lato/Lato-Regular.ttf");
+}
+
+* {
+  font-family: "lato";
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  background: #FD2D01;
+}
+
+main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+}
+/*# sourceMappingURL=settings.css.map */
