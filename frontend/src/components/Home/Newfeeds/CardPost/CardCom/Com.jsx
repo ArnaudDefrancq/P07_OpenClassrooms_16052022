@@ -30,7 +30,7 @@ const Com = ({post, data}) => {
             {
             post.id === data.PostId && (
                 <li>
-                     <p>{data.content}</p>
+                    <p>{data.content}</p>
                     <p>{post.pseudo}</p>
                     <p ><Moment local="fr" fromNow >{data.createdAt}</Moment></p>
                     {data.UserId === uid  && (<button  onClick={deleteCom}>Supprimer</button>)}

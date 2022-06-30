@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import Author from './Author';
 import CreateCom from '../CardPost/CardCom/CreateCom'
 import CardCom from '../CardPost/CardCom/CardComs';
+import Like from './Like';
 
 
 const CardPost = ({post}) => {
@@ -86,6 +87,7 @@ const CardPost = ({post}) => {
                 {post.UserId === uid  && (<button onClick={() => setIsUpdated(!isUpdated)}>Modifier</button>)}
                 {post.UserId === uid  && (<button  onClick={deletePost}>Supprimer</button>)}
             </div>
+            <Like post={post} />
             <CardCom post={post} />
             <CreateCom post={post} />
         </div>    
