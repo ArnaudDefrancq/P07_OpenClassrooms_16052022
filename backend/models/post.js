@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Post.hasMany(models.Comment, { onDelete: "cascade" });
+      models.User.hasMany(models.Like, { onDelete: "cascade" });
       models.Post.belongsTo(models.User, {
         foreignKey: {
           allowNull: false,
@@ -23,7 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       content: DataTypes.STRING,
       attachment: DataTypes.STRING,
       pseudo: DataTypes.STRING,
-      likes: DataTypes.STRING,
     },
     {
       sequelize,

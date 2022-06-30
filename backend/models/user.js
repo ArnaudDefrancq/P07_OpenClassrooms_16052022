@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.User.hasMany(models.Post);
       models.User.hasMany(models.Comment, { onDelete: "cascade" });
+      models.User.hasMany(models.Like, { onDelete: "cascade" });
     }
   }
   User.init(

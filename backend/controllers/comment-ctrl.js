@@ -1,6 +1,5 @@
 const model = require("../models");
 const modelComs = model.Comment;
-const modelPost = model.Post;
 
 exports.createComs = (req, res) => {
   const comment = new modelComs({
