@@ -11,6 +11,7 @@ const authRoutes = require("./routes/auth-route");
 const postRoutes = require("./routes/post-route");
 const comRoutes = require("./routes/comment-route");
 const userIdRoutes = require("./middleware/auth-config");
+const likeRoutes = require("./routes/like-route");
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-models.sequelize.sync({ alter: true });
+models.sequelize.sync();
 
 const limiter = rateLimit({
   max: 100,
@@ -64,6 +65,9 @@ app.use("/api/com", comRoutes);
 app.get("/userId", userIdRoutes, (req, res) => {
   res.status(200).json(req.auth);
 });
+
+// Route pour les like
+app.use("/api/like", likeRoutes);
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 

@@ -10,7 +10,7 @@ module.exports = {
       },
       likes: {
         type: Sequelize.INTEGER,
-        defaultValue: 0,
+        defaultvalue: 0,
       },
       createdAt: {
         allowNull: false,
