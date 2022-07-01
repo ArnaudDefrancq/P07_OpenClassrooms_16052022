@@ -53,7 +53,7 @@ const Login = () => {
                 required/>
                 <div id='passwordError'></div>
 
-                <button type="submit" value="connection" >Connection</button>
+                <button type="submit" value="connection" className='btn-conection'>Connection</button>
             </form>
         </div>
     );
