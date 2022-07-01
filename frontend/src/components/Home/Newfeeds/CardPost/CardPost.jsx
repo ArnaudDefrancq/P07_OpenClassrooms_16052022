@@ -87,7 +87,7 @@ const CardPost = ({post}) => {
                 {post.UserId === uid  && (<button onClick={() => setIsUpdated(!isUpdated)}>Modifier</button>)}
                 {post.UserId === uid  && (<button  onClick={deletePost}>Supprimer</button>)}
             </div>
-            <Like post={post} />
+            {/* <Like post={post} /> */}
             <CardCom post={post} />
             <CreateCom post={post} />
         </div>    
