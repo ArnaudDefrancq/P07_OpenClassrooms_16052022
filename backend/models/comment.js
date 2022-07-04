@@ -24,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   Comment.init(
     {
       content: DataTypes.STRING,
+      pseudo: DataTypes.STRING,
     },
     {
       sequelize,

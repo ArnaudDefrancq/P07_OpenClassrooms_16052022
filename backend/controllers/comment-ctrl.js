@@ -6,6 +6,7 @@ exports.createComs = (req, res) => {
     ...req.body,
     UserId: req.auth.userId,
     // PostId: req.body.id,
+    pseudo: req.auth.userPseudo,
   });
 
   comment
