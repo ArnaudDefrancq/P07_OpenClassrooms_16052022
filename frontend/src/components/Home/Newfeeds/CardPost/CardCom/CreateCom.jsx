@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faImages, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const CreateCom = ({post}) => {
 
@@ -33,18 +35,16 @@ const CreateCom = ({post}) => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                {/* <p>{post.id}</p> */}
-                <textarea 
-                    cols="30"
-                    rows="10"
+            <form onSubmit={handleSubmit} className='create-com'>
+                <textarea
                     onChange={(e) => {
                         setComValue(e.target.value)
                     }}
                     value={comValue}
-                ></textarea>
-                <p></p>
-                <button type="submit" >commenter</button>
+                    className="com-container"
+                    placeholder='Commentaire ...'
+                />
+                <button type="submit" className='btn-com'><FontAwesomeIcon icon={faPaperPlane} /></button>
             </form>
         </div>
     );

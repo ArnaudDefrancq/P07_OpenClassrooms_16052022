@@ -3,7 +3,7 @@ import React from 'react';
 const Author = ({post}) => {
     return (
         <>
-            <p>{post.pseudo}</p>
+            <p className='author-post'>{post.pseudo}</p>
         </>
     );
 };

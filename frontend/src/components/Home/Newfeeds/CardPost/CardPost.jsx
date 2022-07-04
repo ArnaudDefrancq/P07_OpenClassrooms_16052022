@@ -8,6 +8,8 @@ import { useContext } from 'react';
 import Author from './Author';
 import CreateCom from '../CardPost/CardCom/CreateCom'
 import CardCom from '../CardPost/CardCom/CardComs';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle, faFile, faFilePen, faImages, faPaperPlane, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Like from './Like';
 
 
@@ -17,6 +19,7 @@ const CardPost = ({post}) => {
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState("");
     const [pictureUpdate, setPictureUpdate] = useState("");
+    const [imageAdded, setImageAdded] = useState(false);
 
     const uid = useContext(UidContext);
 
@@ -50,46 +53,51 @@ const CardPost = ({post}) => {
         .catch(err => console.log(err));
     }
     return (
-        <div>
+        <div className='post-card'>
             <div className='publication-user'>
                  <Author post={post} />
                 <p className='date-post'><Moment local="fr" fromNow >{post.createdAt}</Moment></p>
             </div>
-            <div>
+            
                 {isUpdated === false && (
                     <div className='post'>
-                        <p>{post.content}</p>
-                        {post.attachment ? <img src={post.attachment} alt="user" /> : null}
+                        <p className='post-content'>{post.content}</p>
+                        {post.attachment ? <div className='center'> <img className='picture' src={post.attachment} alt="user" /> </div> : null}
                     </div>)}
                 {isUpdated === true && (
-                    <div>
+                    <div className='update-post-container'>
                         <textarea 
                         defaultValue={post.content}
                         onChange={(e) => {
                         setTextUpdate(e.target.value)
                         }}
+                        id='picture' 
+                        className='new-post'
                         />
-                        {post.attachment ? <img src={post.attachment} alt="user" /> : null}
-                        <input 
-                        type="file"
-                        name='attachment'
-                        onChange={(e) => {
-                        setPictureUpdate(e.target.files[0])
-                        }}
-                        />
-
-                        <button onClick={updateItem}>Modifier</button>
+                        {/* {post.attachment ? <div> <img src={post.attachment} alt="user" /> </div> : null} */}
+                        <div>
+                            <input 
+                            type="file"
+                            name='attachment'
+                            defaultValue={post.attachment}
+                            onChange={(e) => {
+                                setPictureUpdate(e.target.files[0])
+                            }}
+                            />
+                            <label htmlFor="picture" >
+                            <FontAwesomeIcon className='add-picture' icon={faImages} color={imageAdded ? "#f57251" : null} /></label>
+                            <button onClick={updateItem}>Modifier</button>
+                        </div>
                     </div>
                 )}
-                <p>postID = {post.UserId}</p>
-                <p>{post.id}</p>
-                <p>{uid}</p>
-                {post.UserId === uid  && (<button onClick={() => setIsUpdated(!isUpdated)}>Modifier</button>)}
-                {post.UserId === uid  && (<button  onClick={deletePost}>Supprimer</button>)}
-            </div>
+                <div className='option-post'>
+                    {post.UserId === uid  && (<button onClick={() =>    setIsUpdated(!isUpdated)} className='update-post'><FontAwesomeIcon icon={faFile} /></button>)}
+                    {post.UserId === uid  && (<button  onClick={deletePost} className='update-post'><FontAwesomeIcon icon={faTrash} /></button>)}
+                </div>
+                <p className='commentaire'>Commentaires</p>
             {/* <Like post={post} /> */}
-            <CardCom post={post} />
             <CreateCom post={post} />
+            <ul><CardCom post={post} /></ul>
         </div>    
     );
 };

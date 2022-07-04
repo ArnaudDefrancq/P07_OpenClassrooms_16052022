@@ -23,6 +23,7 @@ const CardComs = ({post}) => {
 
     return (
         <>
+            
             {
                 loadCom.map((data) => {  
                     return <Com post={post} data={data} key={data.id} />
