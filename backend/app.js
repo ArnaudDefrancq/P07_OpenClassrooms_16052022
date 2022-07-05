@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config({ path: "./config/.env" });
-const rateLimit = require("express-rate-limit");
+// const rateLimit = require("express-rate-limit");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const path = require("path");
@@ -21,13 +21,13 @@ app.use(cookieParser());
 
 models.sequelize.sync();
 
-const limiter = rateLimit({
-  max: 100,
-  windowMs: 60 * 60 * 1000,
-  message: "Too many request from this IP",
-});
+// const limiter = rateLimit({
+//   max: 100,
+//   windowMs: 60 * 60 * 1000,
+//   message: "Too many request from this IP",
+// });
 
-app.use(limiter);
+// app.use(limiter);
 
 app.use(express.json());
 

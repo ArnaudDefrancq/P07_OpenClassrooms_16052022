@@ -1,6 +1,6 @@
 const model = require("../models");
 const modelPost = model.Post;
-const modelUser = model.User;
+const fs = require("fs");
 
 exports.createPost = (req, res) => {
   if (req.file) {
@@ -63,14 +63,47 @@ exports.updatePost = (req, res) => {
   console.log(newPost);
 
   modelPost
-    .update(newPost, { where: { id: req.params.id } })
-    .then((data) => res.status(200).json({ message: "post modifier", data }))
-    .catch((err) => res.status(400).json({ err }));
+    .findOne({ where: { id: req.params.id } })
+    .then((post) => {
+      if (post.UserId !== req.auth.userId) {
+        res.status(401).json({ message: "no autorisé" });
+      } else {
+        const filename = post.attachment.split("/images/")[1];
+        fs.unlink(`images/${filename}`, () => {
+          modelPost
+            .update(newPost, { where: { id: req.params.id } })
+            .then((data) =>
+              res.status(200).json({ message: "post modifier", data })
+            )
+            .catch((err) => res.status(400).json({ err }));
+        });
+      }
+    })
+    .catch((err) => res.satus(400).json({ err }));
 };
 
 exports.deletePost = (req, res) => {
   modelPost
-    .destroy({ where: { id: req.params.id } })
-    .then(() => res.status(200).json({ message: "post effacé" }))
-    .catch((err) => res.status(400).json({ err }));
+    .findOne({ where: { id: req.params.id } })
+    .then((post) => {
+      console.log(post.UserId);
+      console.log(req.auth.userId);
+      if (post.UserId !== req.auth.userId) {
+        console.log("bonjour");
+        res.status(401).json({ message: "pas autorisé" });
+      } else {
+        console.log("bonsoir");
+        const filename = post.attachment.split("/images/")[1];
+        console.log(filename);
+        fs.unlink(`images/${filename}`, () => {
+          modelPost
+            .destroy({ where: { id: req.params.id } })
+            .then(() => res.status(200).json({ message: "post effacé" }))
+            .catch((err) =>
+              res.status(400).json({ message: "probleme la", err })
+            );
+        });
+      }
+    })
+    .catch((err) => res.status(400).json({ message: "probleme ici", err }));
 };
