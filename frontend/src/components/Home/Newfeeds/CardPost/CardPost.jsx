@@ -9,7 +9,7 @@ import Author from './Author';
 import CreateCom from '../CardPost/CardCom/CreateCom'
 import CardCom from '../CardPost/CardCom/CardComs';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faFile, faFilePen, faImages, faPaperPlane, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faFile, faImages,  faTrash } from "@fortawesome/free-solid-svg-icons";
 import Like from './Like';
 
 
@@ -17,8 +17,8 @@ const CardPost = ({post}) => {
 
     // const [loadCom, setLoadCom] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
-    const [textUpdate, setTextUpdate] = useState("");
-    const [pictureUpdate, setPictureUpdate] = useState("");
+    const [textUpdate, setTextUpdate] = useState(post.content);
+    const [pictureUpdate, setPictureUpdate] = useState(post.attachment);
     const [imageAdded, setImageAdded] = useState(false);
 
     const uid = useContext(UidContext);
@@ -33,7 +33,6 @@ const CardPost = ({post}) => {
     };
 
     const updateItem = async (e) => {
-        e.preventDefault()
 
         const formData = new FormData();
         formData.append('content', textUpdate)
@@ -75,18 +74,19 @@ const CardPost = ({post}) => {
                         className='new-post'
                         />
                         {/* {post.attachment ? <div> <img src={post.attachment} alt="user" /> </div> : null} */}
-                        <div>
+                        <div className='update-file'>
                             <input 
+                            // className='input-update-picture'
                             type="file"
                             name='attachment'
-                            defaultValue={post.attachment}
+                            // defaultValue={post.attachment}
                             onChange={(e) => {
                                 setPictureUpdate(e.target.files[0])
                             }}
                             />
-                            <label htmlFor="picture" >
-                            <FontAwesomeIcon className='add-picture' icon={faImages} color={imageAdded ? "#f57251" : null} /></label>
-                            <button onClick={updateItem}>Modifier</button>
+                            <label htmlFor="picture" className='update-picture'>
+                            <FontAwesomeIcon className='size' icon={faImages} color={imageAdded ? "#f57251" : null} /></label>
+                            <button onClick={updateItem} className='check-update'><FontAwesomeIcon className='size' icon={faCheck} /></button>
                         </div>
                     </div>
                 )}

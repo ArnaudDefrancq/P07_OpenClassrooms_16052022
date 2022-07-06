@@ -1,16 +1,15 @@
 import React, {useState } from 'react';
 import axios from 'axios';
+import { useRef } from 'react';
 
 const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const refLoginError = useRef();
 
     const handleLogin = (e) => {
         e.preventDefault();
-
-        const emailError = document.getElementById('emailError');
-        const passwordError = document.getElementById('passwordError');
 
         axios({
             method: "POST",
@@ -22,14 +21,16 @@ const Login = () => {
             },
         })
         .then((res) =>  {
-            if (res.data.err) {
-                emailError.innerHTML = res.data.errors.message;
-                passwordError.innerHTML = res.data.err.password;
-            } else {
+            console.log(res);
+            if (res) {
                 window.location = '/trending';
+            } else {
+               return console.log('pas connecter');
             }
         })
-        .catch ((err) => console.log(err))
+        .catch ((err) => { 
+            refLoginError.current.textContent = "probleme";
+        console.log(err)})
     };
 
     return (
@@ -42,7 +43,6 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 required/>
-                <div id='emailError'></div>
                 <br />
 
                 <input 
@@ -51,7 +51,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password} 
                 required/>
-                <div id='passwordError'></div>
+                <div ref={refLoginError}></div>
 
                 <button type="submit" value="connection" className='btn-conection'>Connection</button>
             </form>
