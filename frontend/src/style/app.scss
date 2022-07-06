@@ -34,12 +34,23 @@
 // ****************************************************** //
 // ***************Header********************************* //
 .header {
+    position: relative;
     display: flex;
     justify-content: center;
     height: 80px;
     background: $white;
     border-bottom: 2px solid $black;
 };
+
+.logout {
+    cursor: pointer;
+    font-size: 1.6rem;
+    position: absolute;
+    top: 2%;
+    right: 10%;
+    background: white;
+    border: none;
+}
 
 // ****************************************************** //
 // ***************Formulaire d'accueil******************* //
