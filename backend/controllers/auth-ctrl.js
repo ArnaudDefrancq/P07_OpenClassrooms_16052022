@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const models = require("../models");
 const userModel = models.User;
 const jwt = require("jsonwebtoken");
-const fs = require("fs");
 
 // Voir tout les user
 exports.allUsers = (req, res) => {
@@ -105,4 +104,9 @@ exports.login = (req, res) => {
     .catch((err) => {
       res.status(500).json({ err });
     });
+};
+
+exports.logout = (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/");
 };
