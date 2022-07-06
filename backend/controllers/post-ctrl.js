@@ -59,9 +59,6 @@ exports.updatePost = (req, res) => {
     : {
         ...req.body,
       };
-
-  console.log(newPost);
-
   modelPost
     .findOne({ where: { id: req.params.id } })
     .then((post) => {
@@ -86,15 +83,10 @@ exports.deletePost = (req, res) => {
   modelPost
     .findOne({ where: { id: req.params.id } })
     .then((post) => {
-      console.log(post.UserId);
-      console.log(req.auth.userId);
       if (post.UserId !== req.auth.userId) {
-        console.log("bonjour");
         res.status(401).json({ message: "pas autorisé" });
       } else {
-        console.log("bonsoir");
         const filename = post.attachment.split("/images/")[1];
-        console.log(filename);
         fs.unlink(`images/${filename}`, () => {
           modelPost
             .destroy({ where: { id: req.params.id } })
