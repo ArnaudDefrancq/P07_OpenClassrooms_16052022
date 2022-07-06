@@ -34,22 +34,27 @@ const CardPost = ({post}) => {
 
     const updateItem = async (e) => {
 
+        e.preventDefault() 
+        
         const formData = new FormData();
         formData.append('content', textUpdate)
         formData.append('attachment', pictureUpdate)
 
-        console.log(textUpdate);
-
+        console.log(formData);
 
         await axios.put(`${process.env.REACT_APP_API_URL}api/post/update/${post.id}`, formData, config)
         .then((res) => console.log(res))
         .catch(err => console.log(err))
+
+        window.location.reload()
     }   
 
     const deletePost = () =>{
         axios.delete(`${process.env.REACT_APP_API_URL}api/post/${post.id}`, config)
         .then(() => console.log('post effacé'))
         .catch(err => console.log(err));
+
+        window.location.reload()
     }
     return (
         <div className='post-card'>

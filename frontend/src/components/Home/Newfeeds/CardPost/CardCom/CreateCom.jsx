@@ -18,7 +18,6 @@ const CreateCom = ({post}) => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
 
         const data = {
             content: comValue,
@@ -30,6 +29,8 @@ const CreateCom = ({post}) => {
         await axios.post(`${process.env.REACT_APP_API_URL}api/com/`, data, config)
         .then((res) => console.log(res))
         .catch(err => console.log(err))
+
+        window.location.reload()
     }
 
 

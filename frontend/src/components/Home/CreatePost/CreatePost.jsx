@@ -22,6 +22,8 @@ const CreatePost = () => {
         formData.append('content', message);
         formData.append('attachment', postPicture);
 
+        console.log(formData);
+
         await axios.post(`${process.env.REACT_APP_API_URL}api/post/`,formData , config)
         .then((res) => console.log(res))
         .catch(err => console.log(err));
@@ -38,7 +40,7 @@ const CreatePost = () => {
                     setMessage(e.target.value)
                     }}
                     value={message}
-                    required>
+                    >
                     </textarea>
                     <div className='add-picture-container'>
                         <input 
