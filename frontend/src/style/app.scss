@@ -73,6 +73,18 @@
     }
 };
 
+.signup-error {
+    color: red;
+    font-size: 0.95rem;
+    width: 100%;
+    text-align: center;
+}
+
+.login-error {
+    color: red;
+    margin-top: 10px;
+}
+
 // ****************************************************** //
 // ***************Page centrale************************** //
 .post-container {

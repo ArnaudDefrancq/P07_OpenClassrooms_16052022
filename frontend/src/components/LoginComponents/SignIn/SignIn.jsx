@@ -29,7 +29,7 @@ const Login = () => {
             }
         })
         .catch ((err) => { 
-            refLoginError.current.textContent = "probleme";
+            refLoginError.current.textContent = "Adresse mail ou mot de passe invalide";
         console.log(err)})
     };
 
@@ -51,7 +51,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 value={password} 
                 required/>
-                <div ref={refLoginError}></div>
+                <div ref={refLoginError} className='login-error'></div>
 
                 <button type="submit" value="connection" className='btn-conection'>Connection</button>
             </form>

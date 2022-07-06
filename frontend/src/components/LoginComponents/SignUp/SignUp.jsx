@@ -26,11 +26,8 @@ const SignUp = () => {
 
   // Fonction pour validé les input
   const checkPseudo = (pseudo) => {
-    console.log(pseudo);
-    console.log(refSignupPseudoError);
      if (/^[a-zA-Z0-9\s]{2,40}$/.test(pseudo)) {
-      refSignupPseudoError.content.textContent = ''
-      console.log('bon pseudo');
+      refSignupPseudoError.current.textContent  = ' ';
     } else {
       refSignupPseudoError.current.textContent = 'Votre pseudo doit faire entre 2 et 30 caractères';
       return false
@@ -42,8 +39,7 @@ const SignUp = () => {
     // console.log(nodeError);
 
     if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(mail)) {
-      refSignupEmailError.textContent = ""
-      console.log('bon email');
+      refSignupEmailError.current.textContent = ""
     } else {
       refSignupEmailError.current.textContent = 'Email incorrect';
       return false
@@ -51,12 +47,8 @@ const SignUp = () => {
   }
 
   const checkPassword = (mdp) => {
-    console.log(mdp);
-    // console.log();
-
     if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/.test(mdp)) {
-      refSignupPasswordError.textContent = "";
-      console.log('bon mdp');
+      refSignupPasswordError.current.textContent = "";
     } else {
       refSignupPasswordError.current.textContent = 'Votre mot de passe doit contenir 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spéciale';
       return false
@@ -113,7 +105,7 @@ const SignUp = () => {
                 required
                 ref={refSignupPseudo}
                 />
-                <div ref={refSignupPseudoError}></div>
+                <div ref={refSignupPseudoError} className='signup-error'></div>
              
                 <input 
                 type="email"
@@ -130,7 +122,7 @@ const SignUp = () => {
                   
                 //   checkEmail(e.target.value)}}
                 />
-                <div ref={refSignupEmailError}></div>
+                <div ref={refSignupEmailError} className='signup-error'></div>
 
         
                 <input 
@@ -145,7 +137,7 @@ const SignUp = () => {
                 required
                 ref={refSignupPassword}
                 />
-                <div ref={refSignupPasswordError}></div>
+                <div ref={refSignupPasswordError} className='signup-error'></div>
 
             <button type="submit" value="Inscription">Insciption
             </button>
