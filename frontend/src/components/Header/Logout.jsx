@@ -7,7 +7,13 @@ const Logout = () => {
 
     const handleClick = () => {
         axios.get(`${process.env.REACT_APP_API_URL}api/auth/logout`)
-        .then((res) => console.log(res))
+        .then((res) => {
+            if (res) {
+                window.location = '/';
+            } else {
+                console.log('err');
+            }
+        })
         .catch(err => console.log(err))
     }
 
