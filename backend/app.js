@@ -11,7 +11,7 @@ const authRoutes = require("./routes/auth-route");
 const postRoutes = require("./routes/post-route");
 const comRoutes = require("./routes/comment-route");
 const userIdRoutes = require("./middleware/auth-config");
-const likeRoutes = require("./routes/like-route");
+const userRoutes = require("./routes/user-route");
 
 const app = express();
 
@@ -54,6 +54,7 @@ app.get("/", (req, res) => {
 
 // Route user
 app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
 
 // // Route pour poster un message
 app.use("/api/post", postRoutes);
@@ -65,9 +66,6 @@ app.use("/api/com", comRoutes);
 app.get("/userId", userIdRoutes, (req, res) => {
   res.status(200).json(req.auth);
 });
-
-// Route pour les like
-app.use("/api/like", likeRoutes);
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
