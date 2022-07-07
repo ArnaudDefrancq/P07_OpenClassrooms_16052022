@@ -17,7 +17,10 @@ exports.createComs = (req, res) => {
 
 exports.getAllComs = (req, res) => {
   modelComs
-    .findAll({ order: [["createdAt", "DESC"]] })
+    .findAll({
+      where: { PostId: req.params.id },
+      order: [["createdAt", "DESC"]],
+    })
     .then((comments) => res.status(200).json(comments))
     .catch((err) => res.status(400).json({ err }));
 };

@@ -5,7 +5,7 @@ import { UidContext } from '../../../../AppContext';
 import { useContext } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faFile, faFilePen, faImages, faPaperPlane, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -29,8 +29,6 @@ const Com = ({post, data}) => {
     }
     return (
         <>
-            {
-            post.id === data.PostId && (
                 <li className='card-com'>
                     <div className='coms'>
                         <div className='coms-container'>
@@ -41,8 +39,7 @@ const Com = ({post, data}) => {
                     </div>
                         <p className='date-com'><Moment local="fr" fromNow >{data.createdAt}</Moment></p>
                 </li>
-            )
-}           
+        
         </>
     );
     
