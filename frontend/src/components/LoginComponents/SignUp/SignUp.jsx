@@ -25,42 +25,44 @@ const SignUp = () => {
   const refSignupPasswordError = useRef();
 
   // Fonction pour validé les input
-  const checkPseudo = (pseudo) => {
-     if (/^[a-zA-Z0-9\s]{2,40}$/.test(pseudo)) {
-      refSignupPseudoError.current.textContent  = ' ';
-    } else {
-      refSignupPseudoError.current.textContent = 'Votre pseudo doit faire entre 2 et 30 caractères';
-      return false
-    }
-  };
+  // const checkPseudo = (pseudo) => {
+  //   console.log(pseudo);
+  //    if (/^[a-zA-Z0-9\s]{3,40}$/.test(pseudo)) {
+  //      refSignupPseudoError.current.textContent  = ' ';
+  //   } else {
+  //       refSignupPseudoError.current.textContent = 'Votre pseudo doit faire entre 2 et 30 caractères';
+  //     return false
+  //   }
+  // };
 
-  const checkEmail = (mail) => {
-    console.log(mail);
-    // console.log(nodeError);
+  // const checkEmail = (mail) => {
+  //   console.log(mail);
+  //   // console.log(nodeError);
 
-    if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(mail)) {
-      refSignupEmailError.current.textContent = ""
-    } else {
-      refSignupEmailError.current.textContent = 'Email incorrect';
-      return false
-    }
-  }
+  //   if (/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(mail)) {
+  //     refSignupEmailError.current.textContent = ""
+  //   } else {
+  //     refSignupEmailError.current.textContent = 'Email incorrect';
+  //     return false
+  //   }
+  // }
 
-  const checkPassword = (mdp) => {
-    if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/.test(mdp)) {
-      refSignupPasswordError.current.textContent = "";
-    } else {
-      refSignupPasswordError.current.textContent = 'Votre mot de passe doit contenir 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spéciale';
-      return false
-    }
-  }
+  // const checkPassword = (mdp) => {
+  //   console.log(mdp);
+  //   if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/.test(mdp)) {
+  //     refSignupPasswordError.current.textContent = "";
+  //   } else {
+  //     console.log('pasbon');
+  //     refSignupPasswordError.current.textContent = 'Votre mot de passe doit contenir 1 minuscule, 1 majuscule, 1 chiffre et 1 caractère spéciale';
+  //     return false
+  //   }
+  // }
 
 
   const handleSubmit = async (e) => {
     
     e.preventDefault();
 
-    if (checkPseudo(refSignupPseudo, refSignupPseudoError) && checkEmail() && checkPassword()) {
       await axios({
         method: "POST",
         url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
@@ -76,9 +78,7 @@ const SignUp = () => {
         }
       })
       .catch((err) => console.log(err))
-    } else {
-      console.log('probleme');
-    }
+
   };  
 
     return (
@@ -99,7 +99,7 @@ const SignUp = () => {
                 placeholder='Pseudo' 
                 onChange={(e) => {
                   setPseudo(e.target.value);
-                  checkPseudo(e.target.value)
+                  // checkPseudo(e.target.value)
                 }}
                 value={pseudo}
                 required
@@ -113,7 +113,7 @@ const SignUp = () => {
                 placeholder="Adresse email"
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  checkEmail(e.target.value)
+                  // checkEmail(e.target.value)
                 }}
                 value={email}
                 required
@@ -131,7 +131,7 @@ const SignUp = () => {
                 placeholder="Mot de passe"
                 onChange={(e) => {
                   setPassword(e.target.value);
-                  checkPassword(e.target.value)
+                  // checkPassword(e.target.value)
                 }}
                 value={password}
                 required
