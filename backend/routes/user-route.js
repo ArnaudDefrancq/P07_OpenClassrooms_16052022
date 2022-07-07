@@ -5,6 +5,6 @@ const authToken = require("../middleware/auth-config");
 
 router.get("/:id", authToken, routerCtrl.findOneUser);
 router.put("/update/:id", authToken, routerCtrl.updateUser);
-router.get("/delete/:id", authToken, routerCtrl.deleteUser);
+router.delete("/delete/:id", authToken, routerCtrl.deleteUser);
 
 module.exports = router;

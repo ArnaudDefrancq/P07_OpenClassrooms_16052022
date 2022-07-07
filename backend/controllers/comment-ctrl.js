@@ -1,12 +1,16 @@
 const model = require("../models");
 const modelComs = model.Comment;
+const modelUser = model.User;
+const modelPost = model.Post;
 
-exports.createComs = (req, res) => {
+exports.createComs = async (req, res) => {
+  const user = await modelUser.findOne({ where: { id: req.auth.userId } });
+  const post = await modelPost.findOne({ where: { id: req.params.id } });
+
   const comment = new modelComs({
     ...req.body,
-    UserId: req.auth.userId,
-    // PostId: req.body.id,
-    pseudo: req.auth.userPseudo,
+    UserId: user.id,
+    PostId: post.id,
   });
 
   comment

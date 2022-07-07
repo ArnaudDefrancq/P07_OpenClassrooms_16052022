@@ -1,9 +1,12 @@
 const model = require("../models");
 const modelPost = model.Post;
 const modelCom = model.Comment;
+const modelUser = model.User;
 const fs = require("fs");
 
-exports.createPost = (req, res) => {
+exports.createPost = async (req, res) => {
+  const userId = await modelUser.findOne({ where: { id: req.auth.userId } });
+
   if (req.file) {
     modelPost
       .create({
@@ -11,8 +14,7 @@ exports.createPost = (req, res) => {
         attachment: `${req.protocol}://${req.get("host")}/images/${
           req.file.filename
         }`,
-        UserId: req.auth.userId,
-        pseudo: req.auth.userPseudo,
+        UserId: userId.id,
       })
       .then((post) =>
         res
@@ -26,8 +28,7 @@ exports.createPost = (req, res) => {
     modelPost
       .create({
         content: req.body.content,
-        UserId: req.auth.userId,
-        pseudo: req.auth.userPseudo,
+        UserId: userId.id,
       })
       .then((post) =>
         res.status(201).json({ message: "Message publié avec succés", post })
@@ -42,6 +43,16 @@ exports.getAllPosts = (req, res) => {
   modelPost
     .findAll({
       order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: modelUser,
+          attributes: ["id", "pseudo"],
+        },
+        {
+          model: modelCom,
+          attributes: ["id", "content"],
+        },
+      ],
     })
     .then((posts) => {
       res.status(200).json(posts);
@@ -49,7 +60,7 @@ exports.getAllPosts = (req, res) => {
     .catch((err) => res.status(400).json({ err }));
 };
 
-exports.updatePost = (req, res) => {
+exports.updatePost = async (req, res) => {
   const newPost = req.file
     ? {
         ...req.body,
@@ -88,7 +99,7 @@ exports.deletePost = (req, res) => {
         res.status(401).json({ message: "pas autorisé" });
       } else {
         modelCom
-          .findAll()
+          .findAll({ where: { PostId: post.id } })
           .then((coms) => {
             if (coms) {
               modelCom

@@ -10,9 +10,9 @@ const checkToken = (req, res, next) => {
   const decodedToken = jwt.verify(token, process.env.TOKEN);
 
   const userId = decodedToken.userId;
-  const userPseudo = decodedToken.userPseudo;
+  // const userPseudo = decodedToken.userPseudo;
 
-  req.auth = { userId: userId, userPseudo: userPseudo };
+  req.auth = { userId: userId };
 
   next();
 };

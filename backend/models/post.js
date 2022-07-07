@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       // postId: DataTypes.INTEGER,
       content: DataTypes.STRING,
       attachment: DataTypes.STRING,
-      pseudo: DataTypes.STRING,
     },
     {
       sequelize,
