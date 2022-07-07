@@ -10,7 +10,6 @@ import CreateCom from '../CardPost/CardCom/CreateCom'
 import CardCom from '../CardPost/CardCom/CardComs';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faFile, faImages,  faTrash } from "@fortawesome/free-solid-svg-icons";
-import Like from './Like';
 
 
 const CardPost = ({post}) => {
@@ -100,7 +99,6 @@ const CardPost = ({post}) => {
                     {post.UserId === uid  && (<button  onClick={deletePost} className='update-post'><FontAwesomeIcon icon={faTrash} /></button>)}
                 </div>
                 <p className='commentaire'>Commentaires</p>
-            {/* <Like post={post} /> */}
             <CreateCom post={post} />
             <ul><CardCom post={post} /></ul>
         </div>    

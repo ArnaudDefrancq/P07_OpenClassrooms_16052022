@@ -1,6 +1,4 @@
 import React from 'react';
-import Moment from "react-moment";
-import 'moment/locale/fr';
 import { UidContext } from '../../../../AppContext';
 import { useContext } from 'react';
 import axios from 'axios';
@@ -9,8 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 
-const Com = ({post, data}) => {
-
+const Com = ({com}) => {
     const uid = useContext(UidContext);
 
     const user = document.cookie.split("=")
@@ -22,7 +19,7 @@ const Com = ({post, data}) => {
     };
 
     const deleteCom = () => {
-        axios.delete(`${process.env.REACT_APP_API_URL}api/com/${data.id}`, config)
+        axios.delete(`${process.env.REACT_APP_API_URL}api/com/${com.id}`, config)
         .then(() => console.log('com effacé'))
         .catch(err => console.log(err));
 
@@ -32,12 +29,11 @@ const Com = ({post, data}) => {
                 <li className='card-com'>
                     <div className='coms'>
                         <div className='coms-container'>
-                            <p className='author-post'>{data.pseudo}</p>
-                            <p className='com-content'>{data.content}</p>
+                            <p className='author-post'>{com.User.pseudo}</p>
+                            <p className='com-content'>{com.content}</p>
                         </div>                  
-                        {data.UserId === uid  && (<button className='delete-com' onClick={deleteCom}><FontAwesomeIcon icon={faTrash} /></button>)}
+                        {com.UserId === uid  && (<button className='delete-com' onClick={deleteCom}><FontAwesomeIcon icon={faTrash} /></button>)}
                     </div>
-                        <p className='date-com'><Moment local="fr" fromNow >{data.createdAt}</Moment></p>
                 </li>
         
         </>

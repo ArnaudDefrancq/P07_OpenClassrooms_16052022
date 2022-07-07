@@ -26,7 +26,7 @@ const CreateCom = ({post}) => {
 
         console.log(data);
 
-        await axios.post(`${process.env.REACT_APP_API_URL}api/com/`, data, config)
+        await axios.post(`${process.env.REACT_APP_API_URL}api/com/${post.id}`, data, config)
         .then((res) => console.log(res))
         .catch(err => console.log(err))
 
