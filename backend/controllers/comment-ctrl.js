@@ -24,6 +24,12 @@ exports.getAllComs = (req, res) => {
     .findAll({
       where: { PostId: req.params.id },
       order: [["createdAt", "DESC"]],
+      include: [
+        {
+          model: modelUser,
+          attributes: ["id", "pseudo"],
+        },
+      ],
     })
     .then((comments) => res.status(200).json(comments))
     .catch((err) => res.status(400).json({ err }));
