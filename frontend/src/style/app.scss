@@ -147,29 +147,50 @@
 };
 
 .add-picture-container {
-    margin-top: 20px;
+    margin-top: 30px;
     margin-bottom: 25px;
     display: flex;
-   justify-content: flex-end;
-    width: 55%;
+   justify-content: space-around;
+    width: 100%;
 };
 
-.test {
+.inpute-add-picture {
     display: none;
 }
 
 .add-picture {
-    cursor: pointer;
-    font-size: 1.1rem;
+    margin-right: 25px;
 }
 
-.btn-createPost {
+.preview-picture {
+    margin-top: 20px;
+    position: relative;
+}
+
+.btn {
     cursor: pointer;
     border: none;
     background: white;
-    font-size: 1.1rem;
+}
+
+.btn-add-picture {
+    border: 1ps solid black;
+    border-radius: 20px;
+    background: gainsboro;
+    padding: 20px 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.delete-picture-preview {
     margin-left: 30px;
 }
+
+.icone{
+    font-size: 1.2rem;
+    background-color: white;
+}
+
 
 // ****************************************************** //
 // ***************Liste de post************************** //

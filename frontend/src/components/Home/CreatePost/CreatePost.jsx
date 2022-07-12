@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImages, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faImages, faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from 'react';
 import { useRef } from 'react';
 
@@ -46,12 +46,19 @@ const CreatePost = () => {
 
         document.location.reload();
     }
-    // onSubmit={onSubmit}
 
     return (
         <div className='createPost-container'>
             <div className='formPost-container'>
                 <form  className="formCreate-container" onSubmit={onSubmit} >
+                    {
+                        postPicture ?
+                            <div className='preview-picture'> 
+                                <img src={preview} alt="File selectionné" className='picture-preview'/>
+                                <button className='btn delete-picture-preview' onClick={(e) => {e.preventDefault(); setPostPicture(null)}}><FontAwesomeIcon icon={faXmark} className='icone'/></button> 
+                            </div>  
+                            : null
+                    }
                     <textarea 
                     placeholder='Message ...'
                     className='text-container'
@@ -59,10 +66,10 @@ const CreatePost = () => {
                     setMessage(e.target.value)
                     }}
                     value={message}
-                    >
-                    </textarea>
+                    />
+    
+
                     <div className='add-picture-container'>
-                    <img src={preview} alt="" />
                         <input 
                         type="file"
                         name='attachment'
@@ -72,17 +79,15 @@ const CreatePost = () => {
 
                         }}
                         ref={fileInputRef}
-                        className="test"
-                        // onInput={setImageAdded}
+                        className="inpute-add-picture"
                         />
-                        {/* <label htmlFor="picture" >Modifier */}
-                        {/* <FontAwesomeIcon className='add-picture' icon={faImages} color={imageAdded ? "#f57251" : null} /> */}
-                        {/* </label> */}
-                        <button onClick={(e) => {
+                        <button className='btn-add-picture' onClick={(e) => {
                             e.preventDefault(); 
                             fileInputRef.current.click()
-                            }}>Ajouté une image</button>
-                        <button type="submit" value="Envoyer"  className='btn-createPost'><FontAwesomeIcon icon={faPaperPlane} /></  button>
+                            }}>Choisir une image</button>
+
+
+                        <button type="submit" value="Envoyer"  className='btn'><FontAwesomeIcon icon={faPaperPlane} className='icone' /></  button>
                     </div>
                 </form>
             </div>
