@@ -9,7 +9,7 @@ import Author from './Author';
 import CreateCom from '../CardPost/CardCom/CreateCom'
 import CardCom from '../CardPost/CardCom/CardComs';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faFile, faImages,  faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faFile, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 
 const CardPost = ({post}) => {
@@ -17,7 +17,6 @@ const CardPost = ({post}) => {
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(post.content);
     const [pictureUpdate, setPictureUpdate] = useState(post.attachment);
-    // const [imageAdded, setImageAdded] = useState(false);
 
     const uid = useContext(UidContext);
 
