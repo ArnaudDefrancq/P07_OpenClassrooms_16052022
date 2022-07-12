@@ -4,6 +4,8 @@ import { useContext } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import Moment from "react-moment";
+import 'moment/locale/fr';
 
 
 
@@ -31,7 +33,8 @@ const Com = ({com}) => {
                         <div className='coms-container'>
                             <p className='author-post'>{com.User.pseudo}</p>
                             <p className='com-content'>{com.content}</p>
-                        </div>                  
+                        </div>  
+                        <p><Moment local="fr" fromNow >{com.createdAt}</Moment></p>                
                         {com.UserId === uid  && (<button className='delete-com' onClick={deleteCom}><FontAwesomeIcon icon={faTrash} /></button>)}
                     </div>
                 </li>
