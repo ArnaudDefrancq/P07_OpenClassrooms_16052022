@@ -1,7 +1,7 @@
 import React from 'react';
 import Moment from "react-moment";
 import 'moment/locale/fr';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import axios from 'axios';
 import { UidContext } from '../../../AppContext';
 import { useContext } from 'react';
@@ -17,6 +17,8 @@ const CardPost = ({post}) => {
     const [isUpdated, setIsUpdated] = useState(false);
     const [textUpdate, setTextUpdate] = useState(post.content);
     const [pictureUpdate, setPictureUpdate] = useState(post.attachment);
+    const [preview, setPreview] = useState('');
+    const fileInputRef = useRef();
 
     const uid = useContext(UidContext);
 
@@ -53,6 +55,7 @@ const CardPost = ({post}) => {
 
         window.location.reload()
     }
+
     return (
         <div className='post-card'>
             <div className='publication-user'>
@@ -65,6 +68,7 @@ const CardPost = ({post}) => {
                         <p className='post-content'>{post.content}</p>
                         {post.attachment ? <div className='center'> <img className='picture' src={post.attachment} alt="user" /> </div> : null}
                     </div>)}
+
                 {isUpdated === true && (
                     <div className='update-post-container'>
                         <textarea 
@@ -75,7 +79,17 @@ const CardPost = ({post}) => {
                         id='picture' 
                         className='new-post'
                         />
-                        {post.attachment ? <div> <img src={post.attachment} alt="user" /> </div> : null}
+
+
+                        {
+                            post.attachment ? <div> 
+                                <img src={post.attachment} alt="user" />                                
+                                <button onClick={(e) => {e.preventDefault(); setPictureUpdate('')}}>Supprimé</button>
+                                </div> 
+                                : 
+                                null
+                        }
+
                         <div className='update-file'>
                             <input 
                             type="file"
@@ -83,9 +97,17 @@ const CardPost = ({post}) => {
                             onChange={(e) => {
                                 setPictureUpdate(e.target.files[0])
                             }}
+                            ref={fileInputRef}
                             />
-                            <label htmlFor="picture" className='update-picture'>mofifier</label>
-                            {/* <FontAwesomeIcon className='size' icon={faImages} color={imageAdded ? "#f57251" : null} /></label> */}
+                            
+                            {/* {
+                                pictureUpdate ? 
+                                <button onClick={(e) => {e.preventDefault(); setPictureUpdate('')}}>Supprimé</button> 
+                                : null
+                            } */}
+
+                            <label htmlFor="picture" className='update-picture'>modifier</label>
+
                             <button onClick={updateItem} className='check-update'><FontAwesomeIcon className='size' icon={faCheck} /></button>
                         </div>
                     </div>

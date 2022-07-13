@@ -2,7 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImages, faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from 'react';
 import { useRef } from 'react';
 
@@ -10,7 +10,6 @@ import { useRef } from 'react';
 const CreatePost = () => {
     const [message, setMessage] = useState('');
     const [postPicture, setPostPicture] = useState('');
-    // const [imageAdded, setImageAdded] = useState('');
     const [preview, setPreview] = useState('');
     const fileInputRef = useRef();
     
