@@ -1,14 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile } from "@fortawesome/free-solid-svg-icons";
 import EditPseudo from "./Edit-Profil/Edit-pseudo";
 import EditEmail from "./Edit-Profil/Edit-Email";
 import DeleteProfil from "./Edit-Profil/Delete-Profil";
 
 const User = () => {
-  const [loadUser, setLoaduser] = useState([""]);
+  const [loadUser, setLoaduser] = useState([]);
 
   const user = document.cookie.split("=");
   const jwt = user[1].split(";");
@@ -33,14 +31,9 @@ const User = () => {
     <>
       <div className="profil-container">
         <form className="profil-container--form">
-          <EditPseudo user={loadUser.pseudo} />
-          <EditEmail user={loadUser.email} />
+          <EditPseudo user={loadUser} />
+          <EditEmail user={loadUser} />
           <DeleteProfil user={loadUser} />
-          <div className="btn-update-container">
-            <button className="btn-update">
-              <FontAwesomeIcon icon={faFile} />
-            </button>
-          </div>
         </form>
       </div>
     </>
