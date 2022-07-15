@@ -390,10 +390,55 @@
 .update-picture {
     margin-right: 20px;
     cursor: pointer;
-    // font-size: 1.5rem;
 }
 
 .size {
     font-size: 1.2rem;
     
+}
+
+// ****************************************************** //
+// ***************Page profil des utilisateurs*********** //
+.profil-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 700px;
+}
+
+.profil-container {
+    width: 25%;
+    border: 1px solid black;
+    background-color: gainsboro;
+    border-radius: 15px;
+
+    .profil-container--form{
+        display: flex;
+        flex-direction: column;
+        padding: 50px 80px;
+    }
+    .btn-update-container {
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 15px;
+        .btn-update {
+            border: none;
+            font-size: 1.2rem;
+            background: none;
+            cursor: pointer;
+        }
+    }
+    .form--input--container{
+        display: flex;
+        flex-direction: column;
+        margin: 15px;
+    }
+    .form--label {
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+    .form--input {
+        padding: 10px 5px;
+    }
+
 }

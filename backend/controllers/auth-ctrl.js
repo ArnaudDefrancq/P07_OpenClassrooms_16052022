@@ -82,6 +82,7 @@ exports.login = (req, res) => {
                 }
               )
             );
+            res.cookie("userId", user.id, { expiresIn: "24h" });
             res.status(200).json({
               userId: user.id,
               userPseudo: user.pseudo,

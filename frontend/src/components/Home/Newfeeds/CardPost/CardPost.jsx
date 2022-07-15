@@ -1,126 +1,154 @@
-import React from 'react';
+import React from "react";
 import Moment from "react-moment";
-import 'moment/locale/fr';
-import { useState, useRef } from 'react';
-import axios from 'axios';
-import { UidContext } from '../../../AppContext';
-import { useContext } from 'react';
-import Author from './Author';
-import CreateCom from '../CardPost/CardCom/CreateCom'
-import CardCom from '../CardPost/CardCom/CardComs';
+import "moment/locale/fr";
+import { useState, useRef } from "react";
+import axios from "axios";
+import { UidContext } from "../../../AppContext";
+import { useContext } from "react";
+import Author from "./Author";
+import CreateCom from "../CardPost/CardCom/CreateCom";
+import CardCom from "../CardPost/CardCom/CardComs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faFile, faTrash } from "@fortawesome/free-solid-svg-icons";
 
+const CardPost = ({ post }) => {
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [textUpdate, setTextUpdate] = useState(post.content);
+  const [pictureUpdate, setPictureUpdate] = useState(post.attachment);
+  const fileInputRef = useRef();
 
-const CardPost = ({post}) => {
+  const uid = useContext(UidContext);
 
-    const [isUpdated, setIsUpdated] = useState(false);
-    const [textUpdate, setTextUpdate] = useState(post.content);
-    const [pictureUpdate, setPictureUpdate] = useState(post.attachment);
-    const [preview, setPreview] = useState('');
-    const fileInputRef = useRef();
+  const user = document.cookie.split("=");
+  const jwt = user[1].split(";");
+  const JWT = jwt[0];
 
-    const uid = useContext(UidContext);
+  const config = {
+    headers: {
+      authorization: `bearer ${JWT}`,
+    },
+  };
 
+  const updateItem = async (e) => {
+    e.preventDefault();
 
-    const user = document.cookie.split("=")
+    const formData = new FormData();
+    formData.append("content", textUpdate);
+    formData.append("attachment", pictureUpdate);
 
-    const config = {
-        headers: {
-            "authorization": `bearer ${user[1]}`
-        }
-    };
+    console.log(formData);
 
-    const updateItem = async (e) => {
+    await axios
+      .put(
+        `${process.env.REACT_APP_API_URL}api/post/update/${post.id}`,
+        formData,
+        config
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
-        e.preventDefault() 
-        
-        const formData = new FormData();
-        formData.append('content', textUpdate)
-        formData.append('attachment', pictureUpdate)
+    window.location.reload();
+  };
 
-        console.log(formData);
+  const deletePost = () => {
+    axios
+      .delete(`${process.env.REACT_APP_API_URL}api/post/${post.id}`, config)
+      .then(() => console.log("post effacé"))
+      .catch((err) => console.log(err));
 
-        await axios.put(`${process.env.REACT_APP_API_URL}api/post/update/${post.id}`, formData, config)
-        .then((res) => console.log(res))
-        .catch(err => console.log(err))
+    window.location.reload();
+  };
 
-        window.location.reload()
-    }   
+  return (
+    <div className="post-card">
+      <div className="publication-user">
+        <Author post={post} />
+        <p className="date-post">
+          <Moment local="fr" fromNow>
+            {post.createdAt}
+          </Moment>
+        </p>
+      </div>
 
-    const deletePost = () =>{
-        axios.delete(`${process.env.REACT_APP_API_URL}api/post/${post.id}`, config)
-        .then(() => console.log('post effacé'))
-        .catch(err => console.log(err));
-
-        window.location.reload()
-    }
-
-    return (
-        <div className='post-card'>
-            <div className='publication-user'>
-                 <Author post={post} />
-                <p className='date-post'><Moment local="fr" fromNow >{post.createdAt}</Moment></p>
+      {isUpdated === false && (
+        <div className="post">
+          <p className="post-content">{post.content}</p>
+          {post.attachment ? (
+            <div className="center">
+              {" "}
+              <img className="picture" src={post.attachment} alt="user" />{" "}
             </div>
-            
-                {isUpdated === false && (
-                    <div className='post'>
-                        <p className='post-content'>{post.content}</p>
-                        {post.attachment ? <div className='center'> <img className='picture' src={post.attachment} alt="user" /> </div> : null}
-                    </div>)}
+          ) : null}
+        </div>
+      )}
 
-                {isUpdated === true && (
-                    <div className='update-post-container'>
-                        <textarea 
-                        defaultValue={post.content}
-                        onChange={(e) => {
-                        setTextUpdate(e.target.value)
-                        }}
-                        id='picture' 
-                        className='new-post'
-                        />
+      {isUpdated === true && (
+        <div className="update-post-container">
+          <textarea
+            defaultValue={post.content}
+            onChange={(e) => {
+              setTextUpdate(e.target.value);
+            }}
+            id="picture"
+            className="new-post"
+          />
 
+          {post.attachment ? (
+            <div>
+              <img src={post.attachment} alt="user" />
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setPictureUpdate("");
+                }}
+              >
+                Supprimé
+              </button>
+            </div>
+          ) : null}
 
-                        {
-                            post.attachment ? <div> 
-                                <img src={post.attachment} alt="user" />                                
-                                <button onClick={(e) => {e.preventDefault(); setPictureUpdate('')}}>Supprimé</button>
-                                </div> 
-                                : 
-                                null
-                        }
+          <div className="update-file">
+            <input
+              type="file"
+              name="attachment"
+              onChange={(e) => {
+                setPictureUpdate(e.target.files[0]);
+              }}
+              ref={fileInputRef}
+            />
 
-                        <div className='update-file'>
-                            <input 
-                            type="file"
-                            name='attachment'
-                            onChange={(e) => {
-                                setPictureUpdate(e.target.files[0])
-                            }}
-                            ref={fileInputRef}
-                            />
-                            
-                            {/* {
-                                pictureUpdate ? 
-                                <button onClick={(e) => {e.preventDefault(); setPictureUpdate('')}}>Supprimé</button> 
-                                : null
-                            } */}
+            <label htmlFor="picture" className="update-picture">
+              modifier
+            </label>
 
-                            <label htmlFor="picture" className='update-picture'>modifier</label>
-
-                            <button onClick={updateItem} className='check-update'><FontAwesomeIcon className='size' icon={faCheck} /></button>
-                        </div>
-                    </div>
-                )}
-                <div className='option-post'>
-                    {post.UserId === uid  && (<button onClick={() =>    setIsUpdated(!isUpdated)} className='update-post'><FontAwesomeIcon icon={faFile} /></button>)}
-                    {post.UserId === uid  && (<button  onClick={deletePost} className='update-post'><FontAwesomeIcon icon={faTrash} /></button>)}
-                </div>
-                <p className='commentaire'>Commentaires</p>
-            <CreateCom post={post} />
-            <ul><CardCom post={post} /></ul>
-        </div>    
-    );
+            <button onClick={updateItem} className="check-update">
+              <FontAwesomeIcon className="size" icon={faCheck} />
+            </button>
+          </div>
+        </div>
+      )}
+      <div className="option-post">
+        {post.UserId === uid && (
+          <button
+            onClick={() => setIsUpdated(!isUpdated)}
+            className="update-post"
+          >
+            <FontAwesomeIcon icon={faFile} />
+          </button>
+        )}
+        {post.UserId === uid && (
+          <button onClick={deletePost} className="update-post">
+            <FontAwesomeIcon icon={faTrash} />
+          </button>
+        )}
+      </div>
+      <p className="commentaire">Commentaires</p>
+      <CreateCom post={post} />
+      <ul>
+        <CardCom post={post} />
+      </ul>
+    </div>
+  );
 };
 
 export default CardPost;
