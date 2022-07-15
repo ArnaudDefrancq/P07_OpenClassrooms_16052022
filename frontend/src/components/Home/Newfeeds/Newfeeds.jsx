@@ -11,7 +11,6 @@ const Newfeeds = () => {
   // récup le jwt et userId
   const user = document.cookie.split("=");
   const jwt = user[1].split(";");
-  // const userId = user[2];
   const JWT = jwt[0];
 
   const config = {
