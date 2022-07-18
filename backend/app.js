@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-models.sequelize.sync({ alter: true });
+models.sequelize.sync();
 
 // const limiter = rateLimit({
 //   max: 100,

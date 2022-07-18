@@ -14,7 +14,10 @@ const DeleteProfil = ({ user }) => {
     if (window.confirm(`Voulez-vous désactiver ce compte?`)) {
       e.preventDefault();
       axios
-        .delete(`${process.env.REACT_APP_API_URL}api/post/${user.id}`, config)
+        .delete(
+          `${process.env.REACT_APP_API_URL}api/user/delete/${user.id}`,
+          config
+        )
         .then(() => console.log("Compte effacé"))
         .catch((err) => console.log(err));
       window.location = "/";
