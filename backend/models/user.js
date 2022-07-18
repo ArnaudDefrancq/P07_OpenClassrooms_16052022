@@ -9,8 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.User.hasMany(models.Post);
-      models.User.hasMany(models.Comment, { onDelete: "cascade" });
+      models.User.hasMany(models.Post, {
+        onDelete: "cascade",
+        foreignKey: { name: "UserId", allowNull: false },
+        hooks: true,
+      });
+      models.User.hasMany(models.Comment, {
+        onDelete: "cascade",
+        foreignKey: { name: "UserId", allowNull: false },
+        hooks: true,
+      });
     }
   }
   User.init(
