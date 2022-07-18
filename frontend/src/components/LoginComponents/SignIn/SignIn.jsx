@@ -22,6 +22,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         if (res) {
+          localStorage.setItem("UserId", JSON.stringify(res.data.userId));
           window.location = "/trending";
         } else {
           return console.log("pas connecter");

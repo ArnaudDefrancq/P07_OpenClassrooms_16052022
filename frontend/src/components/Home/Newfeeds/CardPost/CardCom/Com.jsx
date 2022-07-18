@@ -10,13 +10,12 @@ import "moment/locale/fr";
 const Com = ({ com }) => {
   const uid = useContext(UidContext);
 
-  const user = document.cookie.split("=");
-  const jwt = user[1].split(";");
-  const JWT = jwt[0];
+  const user = document.cookie;
 
+  const jwt = user.split("=");
   const config = {
     headers: {
-      authorization: `bearer ${JWT}`,
+      authorization: `bearer ${jwt[1]}`,
     },
   };
 

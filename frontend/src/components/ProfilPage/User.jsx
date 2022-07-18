@@ -7,24 +7,25 @@ import DeleteProfil from "./Edit-Profil/Delete-Profil";
 
 const User = () => {
   const [loadUser, setLoaduser] = useState([]);
+  const userId = localStorage.getItem("UserId");
 
-  const user = document.cookie.split("=");
-  const jwt = user[1].split(";");
-  const userId = user[2];
-  const JWT = jwt[0];
-
+  const user = document.cookie;
+  const jwt = user.split("=");
   const config = {
     headers: {
-      authorization: `bearer ${JWT}`,
+      authorization: `bearer ${jwt[1]}`,
     },
   };
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`, config)
-      .then((res) => {
-        setLoaduser(res.data);
-      })
-      .catch((err) => console.log(err));
+    const fetchData = async () => {
+      await axios
+        .get(`${process.env.REACT_APP_API_URL}api/user/${userId}}`, config)
+        .then((res) => {
+          setLoaduser(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

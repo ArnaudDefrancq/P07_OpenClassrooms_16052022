@@ -2,20 +2,23 @@ import axios from "axios";
 import React from "react";
 
 const UserProfil = () => {
-  const user = document.cookie.split("=");
-  const jwt = user[1].split(";");
-  const userId = user[2];
-  const JWT = jwt[0];
+  const user = document.cookie;
 
+  const jwt = user.split("=");
   const config = {
     headers: {
-      authorization: `bearer ${JWT}`,
+      authorization: `bearer ${jwt[1]}`,
     },
   };
 
   const handleClick = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`, config)
+      .get(
+        `${process.env.REACT_APP_API_URL}api/user/${localStorage.getItem(
+          "UserId"
+        )}`,
+        config
+      )
       .then((res) => {
         if (res) {
           window.location = "/profil";
