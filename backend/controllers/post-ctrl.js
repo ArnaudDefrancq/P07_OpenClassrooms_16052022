@@ -100,28 +100,29 @@ exports.updatePost = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     const post = await modelPost.findOne({ where: { id: req.params.id } });
-
     if (post.UserId === req.auth.userId) {
-      if (post.attachment) {
-        const filename = post.attachment.split("/images/")[1];
-        fs.unlink(`images/${filename}`, () => {
+      modelCom.destroy({ where: { PostId: post.id } }).then(() => {
+        if (post.attachment) {
+          const filename = post.attachment.split("/images/")[1];
+          fs.unlink(`images/${filename}`, () => {
+            modelPost
+              .destroy({ where: { id: post.id } })
+              .then(() => res.status(200).json({ message: "post éffacé" }))
+              .catch((err) =>
+                res.status(400).json({ err, error: "post non détruit" })
+              );
+          });
+        } else {
           modelPost
-            .destroy({ where: { id: post.id } })
-            .then(() => res.status(200).json({ message: "post éffacé" }))
+            .destroy({ where: { id: post.id } }, { truncate: true })
+            .then(() =>
+              res.status(200).json({ message: "Publication supprimée." })
+            )
             .catch((err) =>
-              res.status(400).json({ err, error: "post non détruit" })
+              res.status(400).json({ error: "post non trouvé", err })
             );
-        });
-      } else {
-        modelPost
-          .destroy({ where: { id: post.id } }, { truncate: true })
-          .then(() =>
-            res.status(200).json({ message: "Publication supprimée." })
-          )
-          .catch((err) =>
-            res.status(400).json({ error: "post non trouvé", err })
-          );
-      }
+        }
+      });
     } else {
       return res.status(400).json({ error: "requête non autorisée" });
     }

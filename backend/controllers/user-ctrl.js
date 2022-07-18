@@ -53,16 +53,42 @@ exports.deleteUser = async (req, res) => {
         id: req.params.id,
       },
     });
-    console.log(user);
-
     if (user.id !== req.auth.userId) {
-      console.log("bonjour");
       return res.status(401).json({ message: "non autorisé" });
     } else {
-      user
-        .destroy({ where: { id: user.id } })
-        .then(() => res.status(200).json({ message: "user delete" }))
-        .catch((err) => res.status(400).json({ err }));
+      modelCom.destroy({ where: { UserId: user.id } }).then(() => {
+        modelPost.findOne({ where: { UserId: user.id } }).then((post) => {
+          if (post.attachment) {
+            const filename = post.attachment.split("/images/")[1];
+            fs.unlink(`images/${filename}`, () => {
+              modelPost
+                .destroy({ where: { UserId: user.id } })
+                .then(() => {
+                  modelUser
+                    .destroy({ where: { id: req.params.id } })
+                    .then(() =>
+                      res.status(200).json({ message: "user effacé" })
+                    );
+                })
+                .catch((err) =>
+                  res.status(400).json({ err, error: "post non détruit" })
+                );
+            });
+          } else {
+            modelPost
+              .destroy({ where: { UserId: user.id } }, { truncate: true })
+              .then(() => {
+                modelUser
+                  .destroy({ where: { id: req.params.id } })
+                  .then(() => res.status(200).json({ message: "user effacé" }));
+              })
+
+              .catch((err) =>
+                res.status(400).json({ error: "post non trouvé", err })
+              );
+          }
+        });
+      });
     }
   } catch (err) {
     res.status(500).json({ err });
