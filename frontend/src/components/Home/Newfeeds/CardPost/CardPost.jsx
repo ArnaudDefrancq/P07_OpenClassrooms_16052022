@@ -22,7 +22,6 @@ const CardPost = ({ post }) => {
   const user = document.cookie;
 
   const jwt = user.split("=");
-  console.log(jwt[1]);
   const config = {
     headers: {
       authorization: `bearer ${jwt[1]}`,
