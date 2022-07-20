@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Moment from "react-moment";
 import "moment/locale/fr";
 import { useState, useRef } from "react";
@@ -21,6 +21,8 @@ const CardPost = ({ post }) => {
   const [textUpdate, setTextUpdate] = useState(post.content);
   const [pictureUpdate, setPictureUpdate] = useState(post.attachment);
   const [deletePicture, setDeletePicture] = useState(false);
+  const [newPicture, setNewPicture] = useState();
+  const [preview, setPreview] = useState();
   const fileInputRef = useRef();
 
   const uid = useContext(UidContext);
@@ -64,6 +66,17 @@ const CardPost = ({ post }) => {
     window.location.reload();
   };
 
+  useEffect(() => {
+    if (newPicture) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreview(reader.result);
+      };
+      reader.readAsDataURL(newPicture);
+    } else {
+      setPreview(null);
+    }
+  }, [newPicture]);
   return (
     <div className="post-card">
       <div className="publication-user">
@@ -82,7 +95,7 @@ const CardPost = ({ post }) => {
           {post.attachment ? (
             <div className="center">
               {" "}
-              <img className="picture" src={post.attachment} alt="user" />{" "}
+              <img className="picture" src={pictureUpdate} alt="user" />{" "}
             </div>
           ) : null}
         </div>
@@ -101,7 +114,11 @@ const CardPost = ({ post }) => {
 
           {pictureUpdate ? (
             <div className="preview-picture">
-              <img src={pictureUpdate} alt="user" />
+              {deletePicture ? (
+                <img src={preview} alt="new" />
+              ) : (
+                <img src={pictureUpdate} alt="user" />
+              )}
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -121,8 +138,8 @@ const CardPost = ({ post }) => {
               name="attachment"
               onChange={(e) => {
                 setPictureUpdate(e.target.files[0]);
+                setNewPicture(e.target.files[0]);
               }}
-              ref={fileInputRef}
             />
 
             <button onClick={updateItem} className="check-update">
