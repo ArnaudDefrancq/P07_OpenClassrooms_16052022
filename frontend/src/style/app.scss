@@ -443,6 +443,19 @@
 
 // ****************************************************** //
 // ***************Page profil des utilisateurs*********** //
+.btn-profil {
+    position: absolute;
+    top: 20px;
+    right: 280px;
+    border: none;
+    background: none;
+    font-size: 1.3rem;
+    font-weight: bolder;
+    letter-spacing: 0.1rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .profil-page {
     display: flex;
     align-items: center;

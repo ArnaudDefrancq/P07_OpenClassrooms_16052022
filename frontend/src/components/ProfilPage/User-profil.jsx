@@ -31,7 +31,9 @@ const UserProfil = () => {
 
   return (
     <>
-      <button onClick={handleClick}>Profil</button>
+      <button className="btn-profil" onClick={handleClick}>
+        Profil
+      </button>
     </>
   );
 };

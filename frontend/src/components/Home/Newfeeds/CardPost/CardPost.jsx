@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Moment from "react-moment";
 import "moment/locale/fr";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { UidContext } from "../../../AppContext";
 import { useContext } from "react";
@@ -23,7 +23,6 @@ const CardPost = ({ post }) => {
   const [deletePicture, setDeletePicture] = useState(false);
   const [newPicture, setNewPicture] = useState();
   const [preview, setPreview] = useState();
-  const fileInputRef = useRef();
 
   const uid = useContext(UidContext);
 
