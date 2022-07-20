@@ -1,14 +1,10 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFile } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import { UidContext } from "../../AppContext";
-import { useContext } from "react";
+
 import axios from "axios";
 
 const EditPseudo = ({ user }) => {
-  const [isUpdated, setIsUpdated] = useState(false);
-  const [pseudoUpdate, setPseudoUpdate] = useState(user.pseudo);
+  const [pseudoUpdate, setPseudoUpdate] = useState();
 
   const userToken = document.cookie;
 
@@ -18,8 +14,6 @@ const EditPseudo = ({ user }) => {
       authorization: `bearer ${jwt[1]}`,
     },
   };
-
-  const uid = useContext(UidContext);
 
   const updateProfil = async (e) => {
     e.preventDefault();
@@ -40,45 +34,38 @@ const EditPseudo = ({ user }) => {
 
   return (
     <>
-      {isUpdated === false && (
-        <div>
-          <div className="form--input--container">
-            <p htmlFor="pseudo" className="form--label">
-              Pseudo
-            </p>
-            <p id="pseudo" className="form--input">
-              {user.pseudo}
-            </p>
-          </div>
-        </div>
-      )}
-      {isUpdated === true && (
-        <div>
-          <div className="form--input--container">
-            <label htmlFor="pseudo" className="form--label">
-              Pseudo
-            </label>
-            <input
-              type="text"
-              id="pseudo"
-              className="form--input"
-              defaultValue={user.pseudo}
-              onChange={(e) => setPseudoUpdate(e.target.value)}
-            />
-          </div>
-          <button onClick={updateProfil}>Validé</button>
-        </div>
-      )}
-      {user.id === uid && (
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setIsUpdated(!isUpdated);
+      <div className="form--input--container">
+        <p htmlFor="pseudo" className="form--label">
+          Pseudo :
+        </p>
+        <input
+          type="text"
+          id="pseudo"
+          className="form--input"
+          defaultValue={user.pseudo}
+          onChange={(e) => {
+            setPseudoUpdate(e.target.value);
           }}
-        >
-          <FontAwesomeIcon icon={faFile} />
+        />
+      </div>
+
+      <div className="form--input--container">
+        <label htmlFor="pseudo" className="form--label">
+          Email :
+        </label>
+        <input
+          type="email"
+          value={user.email}
+          id="pseudo"
+          className="form--input"
+          disabled
+        />
+      </div>
+      <div className="update-profil-container">
+        <button onClick={updateProfil} className="update-profil">
+          Enregistrer
         </button>
-      )}
+      </div>
     </>
   );
 };

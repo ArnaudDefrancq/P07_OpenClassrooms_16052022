@@ -464,10 +464,11 @@
 }
 
 .profil-container {
-    width: 25%;
+    width: 28%;
     border: 1px solid black;
-    background-color: gainsboro;
+    background-color: white;
     border-radius: 15px;
+    margin-top: 55px;
 
     .profil-container--form{
         display: flex;
@@ -487,15 +488,44 @@
     }
     .form--input--container{
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
         margin: 15px;
     }
     .form--label {
-        margin-bottom: 10px;
-        font-size: 1.1rem;
+        // margin-bottom: 10px;
+        font-size: 1.2rem;
+        padding: 5px;
     }
     .form--input {
-        padding: 10px 5px;
+        padding: 5px;
+        font-size: 1.2rem;
+        // margin-left: 40px;
+    }
+    .exit-profil {
+        border: none;
+        background: none;
+        font-size: 1.2rem;
+        margin: 15px;
+    }
+
+    .update-profil-container{
+        margin-top: 40px;
+        .update-profil {
+            width: 100%;
+            height: 40px;
+            font-size: 1.2rem;
+        }
+    }
+
+    .btn-delete-profil-container {
+        margin: 40px 0px;
+        .btn-delete-profil{
+            width: 100%;
+            height: 40px;
+            font-size: 1.2rem;
+            background-color: $secondary-color;
+            border: 1px solid black;
+        }
     }
 
 }

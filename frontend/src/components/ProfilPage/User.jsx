@@ -2,8 +2,9 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import EditPseudo from "./Edit-Profil/Edit-pseudo";
-import EditEmail from "./Edit-Profil/Edit-Email";
 import DeleteProfil from "./Edit-Profil/Delete-Profil";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const User = () => {
   const [loadUser, setLoaduser] = useState([]);
@@ -28,12 +29,17 @@ const User = () => {
     fetchData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const handleClick = () => {
+    window.location = "/trending";
+  };
   return (
     <>
       <div className="profil-container">
+        <button className="exit-profil" onClick={handleClick}>
+          <FontAwesomeIcon icon={faXmark} />
+        </button>
         <form className="profil-container--form">
           <EditPseudo user={loadUser} />
-          <EditEmail user={loadUser} />
           <DeleteProfil user={loadUser} />
         </form>
       </div>

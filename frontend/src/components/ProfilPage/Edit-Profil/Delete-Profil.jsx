@@ -26,8 +26,10 @@ const DeleteProfil = ({ user }) => {
     }
   };
   return (
-    <div>
-      <button onClick={disableProfil}>Supprimer le compte</button>
+    <div className="btn-delete-profil-container">
+      <button className="btn-delete-profil" onClick={disableProfil}>
+        Supprimer le compte
+      </button>
     </div>
   );
 };
