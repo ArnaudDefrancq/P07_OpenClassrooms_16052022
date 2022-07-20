@@ -29,15 +29,9 @@ const User = () => {
     fetchData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const handleClick = () => {
-    window.location = "/trending";
-  };
   return (
     <>
       <div className="profil-container">
-        <button className="exit-profil" onClick={handleClick}>
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
         <form className="profil-container--form">
           <EditPseudo user={loadUser} />
           <DeleteProfil user={loadUser} />
