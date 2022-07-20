@@ -1,5 +1,6 @@
 @import "./utils/settings.scss";
 
+
 // ****************************************************** //
 // ***************Page d'accueil************************* //
 .connectModal {
@@ -42,15 +43,6 @@
     border-bottom: 2px solid $black;
 };
 
-.logout {
-    cursor: pointer;
-    font-size: 1.6rem;
-    position: absolute;
-    top: 2%;
-    right: 10%;
-    background: white;
-    border: none;
-}
 
 // ****************************************************** //
 // ***************Formulaire d'accueil******************* //
@@ -107,6 +99,26 @@
     border-radius: 15px;
 };
 
+.navbar {
+    position: absolute;
+    top: 25px;
+    right: 250px;
+    width: 20%;
+}
+
+
+.under-navbar {
+   display: flex;
+   justify-content: space-around;
+   
+}
+
+.btn-navbar {
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+}
+
 // ****************************************************** //
 // ***************Creation d'un post********************* //
 
@@ -146,7 +158,7 @@
         margin-top: 30px;
         margin-bottom: 25px;
         display: flex;
-       justify-content: space-between;
+        justify-content: space-between;
         width: 100%;
     };
     
@@ -263,6 +275,7 @@
 
 .picture {
     margin-top: 25px;
+
 }
 
 .option-post{
@@ -351,7 +364,7 @@
 
 }
 .author-com {
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin-right: 10px;
     font-weight: bold;
 }
@@ -440,22 +453,13 @@
     display: flex;
     justify-content: center;
 }
+.option-post-1 {
+    display: flex;
+    justify-content: flex-end;
+}
 
 // ****************************************************** //
 // ***************Page profil des utilisateurs*********** //
-.btn-profil {
-    position: absolute;
-    top: 20px;
-    right: 280px;
-    border: none;
-    background: none;
-    font-size: 1.3rem;
-    font-weight: bolder;
-    letter-spacing: 0.1rem;
-    text-decoration: underline;
-    cursor: pointer;
-}
-
 .profil-page {
     display: flex;
     align-items: center;
@@ -527,3 +531,9 @@
         }
     }
 }
+@import "./utils/responsiv-1400px.scss";
+@import "./utils/responsive-1200px.scss";
+@import "./utils/responsive-992px.scss";
+@import "./utils/responsive-768px.scss";
+@import "./utils/responsive-576px.scss";
+@import "./utils/reponsive-390px.scss"

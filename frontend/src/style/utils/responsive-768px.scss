@@ -1,0 +1,71 @@
+@media screen and (max-width: 768px) {
+    .header {
+    height: 90px;        
+    }
+    .logo {
+        height: 70px;
+        margin-top: 10px;
+    }
+    .navbar-1 {
+        display: none;
+    }
+    .navbar {
+        top: 15px;
+        left: 20px;
+        background: white;
+
+    }
+    .navbar-2 {
+        display: block;
+        top: 30px;
+        width: 25%;
+        align-items: center;
+    }
+    .btn-navbar-2 {
+        border: none;
+        background: none;
+        font-size: 1.3rem;
+       
+    }
+    .btn-navbar {
+        font-size: 1rem;
+        // margin-top: 10px;
+        
+    }
+    .logo-2 {
+        display: none;
+    }
+    .option-post-2{
+        display: none;
+    }
+    .navbar:hover .under-navbar {
+        display: flex;
+        justify-content: space-around;
+    }
+    
+    .under-navbar{
+        display: none;
+    }
+    .connectModal {
+        width: 40%;
+    }
+    .post-container {
+        width: 90%;
+    }
+    .btn-profil {
+        left: -400px;
+    }
+    .profil-container {
+        width: 50%;
+    }
+
+    .btn-logout {
+        font-size: 1.3rem;
+        border: none;
+        background: none;
+        position: absolute;
+        top: 30px;
+        right: 50px;
+        display: block;
+    }
+}

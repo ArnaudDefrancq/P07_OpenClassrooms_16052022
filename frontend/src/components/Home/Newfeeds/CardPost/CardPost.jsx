@@ -11,6 +11,7 @@ import CardCom from "../CardPost/CardCom/CardComs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
+  faEllipsis,
   faFile,
   faTrash,
   faXmark,
@@ -114,9 +115,13 @@ const CardPost = ({ post }) => {
           {pictureUpdate ? (
             <div className="preview-picture">
               {deletePicture ? (
-                <img src={preview} alt="new" />
+                <img src={preview} alt="new" className="picture-update " />
               ) : (
-                <img src={pictureUpdate} alt="user" />
+                <img
+                  src={pictureUpdate}
+                  alt="user"
+                  className="picture-update "
+                />
               )}
               <button
                 onClick={(e) => {
@@ -147,7 +152,7 @@ const CardPost = ({ post }) => {
           </div>
         </div>
       )}
-      <div className="option-post">
+      <div className="option-post-1">
         {post.UserId === uid && (
           <button
             onClick={() => setIsUpdated(!isUpdated)}
@@ -160,6 +165,33 @@ const CardPost = ({ post }) => {
           <button onClick={deletePost} className="update-post delete-post">
             <FontAwesomeIcon icon={faTrash} />
           </button>
+        )}
+      </div>
+      <div className="option-post-2">
+        {post.UserId === uid && (
+          <nav className="navbar-update">
+            <button className="nav-update">
+              <FontAwesomeIcon icon={faEllipsis} />
+            </button>
+            <ul className="btn-update">
+              <li>
+                <button
+                  onClick={() => setIsUpdated(!isUpdated)}
+                  className="update-post"
+                >
+                  <FontAwesomeIcon icon={faFile} />
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={deletePost}
+                  className="update-post delete-post"
+                >
+                  <FontAwesomeIcon icon={faTrash} />
+                </button>
+              </li>
+            </ul>
+          </nav>
         )}
       </div>
       <p className="commentaire">Commentaires</p>

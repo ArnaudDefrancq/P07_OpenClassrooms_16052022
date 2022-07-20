@@ -8,6 +8,7 @@ const Header = () => {
         alt="Logo groupomania"
         className="logo"
       />
+      <img src="./images/icon.png" alt="logo" className="logo-2" />
     </div>
   );
 };

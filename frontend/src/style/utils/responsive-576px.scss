@@ -1,0 +1,43 @@
+@media screen and (max-width: 576px) {
+    .connectModal{
+        margin-top: 50px;
+        width: 50%;
+    }
+    .logo {
+        display: none;
+    }
+    .logo-2 {
+        display: block;
+    }
+    .post-container {
+        margin-top: 30px;
+    }
+    .navbar-2 {
+        width: 30%;
+    }
+    .formCreate-container {
+        width: 90%;
+    }
+    .createPost-container .formCreate-container {
+        width: 80%;
+    }
+    .feed-list {
+        width: 100%;
+    }
+    .picture {
+        width: 60%;
+
+    }
+    .post-card {
+        width: 96%;
+    }
+    .profil-container {
+        width: 70%;
+    }
+    .option-post-2{
+        display: none;
+    }
+    .picture-update {
+        width: 60%;
+    }
+}

@@ -1,0 +1,45 @@
+@media screen and (max-width: 390px) {
+    .connectModal {
+        width: 70%;
+    }
+    .feed-title {
+        font-size: 1.5rem;
+    }
+    .post-container{
+        width: 90%;
+    }
+    .feed-list {
+        margin-left: 6px;
+        width: 100%;
+    }
+    .option-post-1{
+        display: none;
+    }
+    .option-post-2{
+        display: block;
+    }
+    .nav-update {
+        border: none;
+        background: none;
+        font-size: 1.2rem;
+        width: 90%;
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 30px;
+    }
+    .navbar-update:hover .btn-update {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+    .btn-update {
+        display: none;
+    }
+    .profil-container .profil-container--form {
+        padding: 0 10px;
+
+    }
+    .btn-delete-profil-container {
+        margin: 0px;
+    }
+}

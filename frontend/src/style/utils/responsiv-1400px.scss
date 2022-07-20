@@ -1,0 +1,24 @@
+@media screen and (max-width: 1400px){
+    .option-post-2{
+        display: none;
+    }
+    .navbar-2 {
+        display: none;
+    }
+    .btn-logout {
+        display: none;
+    }
+    .logo-2 {
+        display: none;
+    }
+    .navbar{
+        right: 100px;
+    }
+    .form--input--container {
+        display: flex;
+        flex-direction: column;
+        .form--input{
+            margin-top: 10px;
+        }
+    }
+}

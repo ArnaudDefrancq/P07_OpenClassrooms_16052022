@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../components/Header/Header";
-import Logout from "../../components/Header/Logout";
-import NewfeedsPage from "../../components/ProfilPage/Newfeeds-Page";
+import Navbar from "../../components/Header/navbar";
+
 import User from "../../components/ProfilPage/User";
 
 const Profil = () => {
@@ -9,8 +9,7 @@ const Profil = () => {
     <>
       <header>
         <Header />
-        <Logout />
-        <NewfeedsPage />
+        <Navbar />
       </header>
       <main>
         <User />
