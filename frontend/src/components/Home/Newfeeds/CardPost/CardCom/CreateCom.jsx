@@ -40,7 +40,7 @@ const CreateCom = ({ post }) => {
           }}
           value={comValue}
           className="com-container"
-          placeholder="Commentaire ..."
+          placeholder="Votre commentaire ..."
         />
         <button type="submit" className="btn-com">
           <FontAwesomeIcon icon={faPaperPlane} />

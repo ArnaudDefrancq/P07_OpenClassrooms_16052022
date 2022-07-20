@@ -9,12 +9,18 @@ import Author from "./Author";
 import CreateCom from "../CardPost/CardCom/CreateCom";
 import CardCom from "../CardPost/CardCom/CardComs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faFile, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheck,
+  faFile,
+  faTrash,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 const CardPost = ({ post }) => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [textUpdate, setTextUpdate] = useState(post.content);
   const [pictureUpdate, setPictureUpdate] = useState(post.attachment);
+  const [deletePicture, setDeletePicture] = useState(false);
   const fileInputRef = useRef();
 
   const uid = useContext(UidContext);
@@ -62,7 +68,8 @@ const CardPost = ({ post }) => {
     <div className="post-card">
       <div className="publication-user">
         <Author post={post} />
-        <p className="date-post">
+        <p className="date">
+          {"Publié "}
           <Moment local="fr" fromNow>
             {post.createdAt}
           </Moment>
@@ -92,16 +99,18 @@ const CardPost = ({ post }) => {
             className="new-post"
           />
 
-          {post.attachment ? (
-            <div>
-              <img src={post.attachment} alt="user" />
+          {pictureUpdate ? (
+            <div className="preview-picture">
+              <img src={pictureUpdate} alt="user" />
               <button
                 onClick={(e) => {
                   e.preventDefault();
                   setPictureUpdate("");
+                  setDeletePicture(true);
                 }}
+                className="delete-picture"
               >
-                Supprimé
+                <FontAwesomeIcon icon={faXmark} />
               </button>
             </div>
           ) : null}
@@ -115,10 +124,6 @@ const CardPost = ({ post }) => {
               }}
               ref={fileInputRef}
             />
-
-            <label htmlFor="picture" className="update-picture">
-              modifier
-            </label>
 
             <button onClick={updateItem} className="check-update">
               <FontAwesomeIcon className="size" icon={faCheck} />
@@ -136,16 +141,16 @@ const CardPost = ({ post }) => {
           </button>
         )}
         {post.UserId === uid && (
-          <button onClick={deletePost} className="update-post">
+          <button onClick={deletePost} className="update-post delete-post">
             <FontAwesomeIcon icon={faTrash} />
           </button>
         )}
       </div>
       <p className="commentaire">Commentaires</p>
-      <CreateCom post={post} />
-      <ul>
+      <ul className="card-com-container">
         <CardCom post={post} />
       </ul>
+      <CreateCom post={post} />
     </div>
   );
 };

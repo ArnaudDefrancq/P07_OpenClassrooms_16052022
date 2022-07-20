@@ -30,14 +30,17 @@ const Com = ({ com }) => {
       <li className="card-com">
         <div className="coms">
           <div className="coms-container">
-            <p className="author-post">{com.User.pseudo}</p>
+            <div className="author-com-container">
+              <p className="author-com">{com.User.pseudo}</p>
+              <p className="date">
+                <Moment local="fr" fromNow>
+                  {com.createdAt}
+                </Moment>
+              </p>
+            </div>
             <p className="com-content">{com.content}</p>
           </div>
-          <p>
-            <Moment local="fr" fromNow>
-              {com.createdAt}
-            </Moment>
-          </p>
+
           {com.UserId === uid && (
             <button className="delete-com" onClick={deleteCom}>
               <FontAwesomeIcon icon={faTrash} />

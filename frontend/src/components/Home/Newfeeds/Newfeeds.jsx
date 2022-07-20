@@ -26,7 +26,7 @@ const Newfeeds = () => {
 
   return (
     <div className="feed-container">
-      <h1 className="feed-title">Publication récentes</h1>
+      <h1 className="feed-title">Publications récentes</h1>
       <ul className="feed-list">
         {loadPost.map((post) => {
           return <CardPost post={post} key={post.id} />;

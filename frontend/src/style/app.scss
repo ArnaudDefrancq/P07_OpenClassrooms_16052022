@@ -113,91 +113,87 @@
 .createPost-container {
     height: 100%;
     width: 100%;
+    .formPost-container {
+        margin: 15px 10px;
+        background-color: $white;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        border: 1px solid black;
+    };
+    .formCreate-container{
+        width: 60%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }    
+    .text-container {
+        resize: none;
+        width: 100%;
+        margin-top: 25px;
+        border: 1px solid black;
+        border-radius: 15px;
+        padding-left: 30px;
+        font-size: 1.05rem;
+        padding-top: 20px;
+    };
+    
+    .add-picture-container {
+        margin-top: 30px;
+        margin-bottom: 25px;
+        display: flex;
+       justify-content: space-between;
+        width: 100%;
+    };
+    
+    .inpute-add-picture {
+        display: none;
+    }
+    
+    .add-picture {
+        margin-right: 25px;
+    }
+    
+    .preview-picture {
+        margin-top: 20px;
+        position: relative;
+    }
+    
+    .btn {
+        cursor: pointer;
+        border: none;
+        background: white;
+    }
+    
+    .btn-add-picture {
+        border: 1ps solid black;
+        border-radius: 20px;
+        background: gainsboro;
+        padding: 20px 10px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    
+    .delete-picture-preview {
+        margin-left: 30px;
+    }
+    
+    .icone{
+        font-size: 1.2rem;
+        background-color: white;
+    }
 }
-
-.formPost-container {
-    margin: 15px 25px;
-    background-color: $white;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    width: 95%;
-    border: 1px solid black;
-};
-
-.formCreate-container{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-}
-
-.text-container {
-    resize: none;
-    width: 60%;
-    margin-top: 25px;
-    border: 1px solid black;
-    border-radius: 15px;
-    padding-left: 30px;
-    font-size: 1.05rem;
-    padding-top: 20px;
-};
-
-.add-picture-container {
-    margin-top: 30px;
-    margin-bottom: 25px;
-    display: flex;
-   justify-content: space-around;
-    width: 100%;
-};
-
-.inpute-add-picture {
-    display: none;
-}
-
-.add-picture {
-    margin-right: 25px;
-}
-
-.preview-picture {
-    margin-top: 20px;
-    position: relative;
-}
-
-.btn {
-    cursor: pointer;
-    border: none;
-    background: white;
-}
-
-.btn-add-picture {
-    border: 1ps solid black;
-    border-radius: 20px;
-    background: gainsboro;
-    padding: 20px 10px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-.delete-picture-preview {
-    margin-left: 30px;
-}
-
-.icone{
-    font-size: 1.2rem;
-    background-color: white;
-}
-
 
 // ****************************************************** //
 // ***************Liste de post************************** //
-.feed-container {
-    height: 100%;
-    width: 100%;
-};
+// .feed-container {
+//     height: 100%;
+//     width: 100%;
+// };
 
 .feed-title {
     margin: 30px;
@@ -208,7 +204,7 @@
 .feed-list {
     list-style-type: none;
     display: grid;
-    margin: 10px 20px 70px 20px;
+    margin: 10px 10px 70px 10px;
     gap: 35px;
 };
 
@@ -220,7 +216,7 @@
 };
 
 .publication-user {
-    margin: 15px 15px 0 15px;
+    margin: 15px 5px 0 5px;
     padding-left: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid black;
@@ -229,12 +225,17 @@
 
 .author-post {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
+.date {
+    font-style: italic;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
 .commentaire {
     border-bottom: 1px solid black;
-    margin: 0 15px;
+    margin: 5px;
     padding-left: 20px;
     padding-bottom: 10px;
     font-weight: bold;
@@ -247,9 +248,8 @@
 }
 
 .post {
-    padding: 15px 0px;
+    padding: 15px 20px;
     margin: 0 15px;
-    padding-left: 20px;
 }
 
 .post-content {
@@ -269,7 +269,7 @@
     display: flex;
     justify-content: flex-end;
     border-bottom: 1px solid black;
-    margin: 15px 15px;
+    margin: 15px 5px;
     padding-bottom: 20px;
 
 }
@@ -282,8 +282,20 @@
     border: none;
     cursor: pointer;
     background: white;
+    :hover {
+        color: green;
+        transition: 0.2s;
+    }
 
 }
+.delete-post{
+    :hover {
+        color: red;
+        transition: 0.2s;
+    }
+}
+
+
 
 // ****************************************************** //
 // ***************Ajouter un com************************* //
@@ -300,41 +312,51 @@
     width: 60%;
     height: 50px;
     padding: 13px 20px;
-    margin: 10px 35px;
+    margin: 10px 5px;
     border: 1px solid black;
-    border-radius: 25px;
+    border-radius: 5px;
 };
 
 .btn-com {
     cursor: pointer;
     border: none;
     background: white;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    margin-left: 15px;
 }
 
 // ****************************************************** //
 // ***************Liste de com-************************** //
 .card-com {
-    margin: 15px 35px;
+    margin:  0 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background: #dcdcdca6;
+}
+
+.card-com-container {
+    display: grid;
+    gap: 5px;
 }
 
 .coms {
     display: flex;
+    justify-content: space-between;
 }
 
 .coms-container {
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
-    // width: 25%;
     padding: 15px;
-    border-radius: 15px;
-    background: #dcdcdc8a;
 
 }
 .author-com {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    margin-right: 10px;
     font-weight: bold;
+}
+.author-com-container {
+    display: flex;
 }
 
 .com-content {
@@ -342,11 +364,15 @@
 }
 
 .delete-com {
-    margin-left: 30px;
-    font-size: 1rem;
+    margin-right: 15px;
+    font-size: 1.1rem;
     border: none;
-    background: white;
+    background: none;
     cursor: pointer;
+    :hover {
+        color: red;
+        transition: 0.2s;
+    }
 }
 
 .date-com {
@@ -359,24 +385,36 @@
 .update-post-container{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    justify-content: center;
+    align-items: center;
     margin-top: 15px;
-    margin-left: 35px;
 }
 
 .new-post {
     resize: none;
-
-
+    width: 95%;
+    font-size: 1rem;
+    padding-top: 10px;
+    padding-left: 10px;
+    margin-bottom: 10px;
 }
 
 .update-file {
     padding-top: 10px;
     display: flex;
-    justify-content: flex-end;
-    // width: 50px;
+    justify-content: space-between;
+    width: 95%;
+    margin-top: 15px;
 }
 
+.delete-picture {
+    height: 10%;
+    font-size: 1.2rem;
+    border: none;
+    background: none;
+    margin-left: 30px;
+    cursor: pointer
+}
 .input-update-picture {
     display: none;
 }
@@ -395,6 +433,12 @@
 .size {
     font-size: 1.2rem;
     
+}
+
+.preview-picture {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 // ****************************************************** //
