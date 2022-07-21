@@ -7,7 +7,7 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Moment from "react-moment";
 import "moment/locale/fr";
 
-const Com = ({ com }) => {
+const Com = ({ com, userAdmin }) => {
   const uid = useContext(UidContext);
 
   const user = document.cookie;
@@ -22,8 +22,11 @@ const Com = ({ com }) => {
   const deleteCom = () => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}api/com/${com.id}`, config)
-      .then(() => console.log("com effacé"))
+      .then(() => {
+        console.log("com effacé");
+      })
       .catch((err) => console.log(err));
+    document.location.reload();
   };
   return (
     <>
@@ -41,11 +44,11 @@ const Com = ({ com }) => {
             <p className="com-content">{com.content}</p>
           </div>
 
-          {com.UserId === uid && (
+          {com.UserId === uid || userAdmin ? (
             <button className="delete-com" onClick={deleteCom}>
               <FontAwesomeIcon icon={faTrash} />
             </button>
-          )}
+          ) : null}
         </div>
       </li>
     </>

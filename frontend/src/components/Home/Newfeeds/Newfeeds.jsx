@@ -7,6 +7,9 @@ import CardPost from "./CardPost/CardPost";
 
 const Newfeeds = () => {
   const [loadPost, setLoadPost] = useState([]);
+  const [loadUser, setLoadUser] = useState([]);
+
+  const userId = localStorage.getItem("UserId");
 
   const user = document.cookie;
 
@@ -24,12 +27,19 @@ const Newfeeds = () => {
       .catch((err) => console.log(err));
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_API_URL}api/user/${userId}`, config)
+      .then((res) => setLoadUser(res.data.isAdmin))
+      .catch((err) => console.log(err));
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <div className="feed-container">
       <h1 className="feed-title">Publications récentes</h1>
       <ul className="feed-list">
         {loadPost.map((post) => {
-          return <CardPost post={post} key={post.id} />;
+          return <CardPost post={post} userAdmin={loadUser} key={post.id} />;
         })}
       </ul>
     </div>

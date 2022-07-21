@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 const CreatePost = () => {
   const [message, setMessage] = useState("");
@@ -53,7 +53,7 @@ const CreatePost = () => {
               onChange={(e) => {
                 setPostPicture(e.target.files[0]);
               }}
-              // className="inpute-add-picture"
+              accept=".jpg, .jpeg, .png, .gif"
             />
             <button type="submit" value="Envoyer" className="btn">
               <FontAwesomeIcon icon={faPaperPlane} className="icone" />

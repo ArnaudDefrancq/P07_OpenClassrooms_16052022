@@ -29,6 +29,7 @@ const CreateCom = ({ post }) => {
       .post(`${process.env.REACT_APP_API_URL}api/com/${post.id}`, data, config)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+    window.location.reaload();
   };
 
   return (

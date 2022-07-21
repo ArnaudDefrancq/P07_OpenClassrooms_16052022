@@ -17,7 +17,7 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
-const CardPost = ({ post }) => {
+const CardPost = ({ post, userAdmin }) => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [textUpdate, setTextUpdate] = useState(post.content);
   const [pictureUpdate, setPictureUpdate] = useState(post.attachment);
@@ -63,7 +63,7 @@ const CardPost = ({ post }) => {
       .then(() => console.log("post effacé"))
       .catch((err) => console.log(err));
 
-    window.location.reload();
+    document.location.reload();
   };
 
   useEffect(() => {
@@ -77,6 +77,7 @@ const CardPost = ({ post }) => {
       setPreview(null);
     }
   }, [newPicture]);
+
   return (
     <div className="post-card">
       <div className="publication-user">
@@ -144,6 +145,7 @@ const CardPost = ({ post }) => {
                 setPictureUpdate(e.target.files[0]);
                 setNewPicture(e.target.files[0]);
               }}
+              accept=".jpg, .jpeg, .png, .gif"
             />
 
             <button onClick={updateItem} className="check-update">
@@ -161,14 +163,14 @@ const CardPost = ({ post }) => {
             <FontAwesomeIcon icon={faFile} />
           </button>
         )}
-        {post.UserId === uid && (
+        {post.UserId === uid || userAdmin ? (
           <button onClick={deletePost} className="update-post delete-post">
             <FontAwesomeIcon icon={faTrash} />
           </button>
-        )}
+        ) : null}
       </div>
       <div className="option-post-2">
-        {post.UserId === uid && (
+        {post.UserId === uid || userAdmin ? (
           <nav className="navbar-update">
             <button className="nav-update">
               <FontAwesomeIcon icon={faEllipsis} />
@@ -192,11 +194,11 @@ const CardPost = ({ post }) => {
               </li>
             </ul>
           </nav>
-        )}
+        ) : null}
       </div>
       <p className="commentaire">Commentaires</p>
       <ul className="card-com-container">
-        <CardCom post={post} />
+        <CardCom post={post} userAdmin={userAdmin} />
       </ul>
       <CreateCom post={post} />
     </div>
