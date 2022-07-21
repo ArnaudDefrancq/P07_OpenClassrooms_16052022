@@ -98,7 +98,9 @@
     background-color: $tertiary-color;
     border-radius: 15px;
 };
-
+.navbar-2 {
+    display: none;
+}
 .navbar {
     position: absolute;
     top: 25px;
@@ -318,6 +320,9 @@
     display: flex;
 
 };
+.option-post-2{
+    display: none;
+}
 
 .com-container {
     resize: none;

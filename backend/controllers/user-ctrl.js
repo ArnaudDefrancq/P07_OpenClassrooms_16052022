@@ -4,7 +4,6 @@ const modelCom = model.Comment;
 const modelPost = model.Post;
 const bcryp = require("bcrypt");
 const fs = require("fs");
-const { post } = require("../routes/auth-route");
 
 exports.findOneUser = (req, res) => {
   modelUser

@@ -5,37 +5,47 @@ const modelUser = model.User;
 const fs = require("fs");
 
 exports.createPost = async (req, res) => {
-  const userId = await modelUser.findOne({ where: { id: req.auth.userId } });
-
-  if (req.file) {
-    modelPost
-      .create({
-        content: req.body.content,
-        attachment: `${req.protocol}://${req.get("host")}/images/${
-          req.file.filename
-        }`,
-        UserId: userId.id,
-      })
-      .then((post) =>
-        res
-          .status(201)
-          .json({ message: "Publication avec photo envoyée avec succés", post })
-      )
-      .catch((error) => {
-        res.status(500).json(error);
-      });
-  } else {
-    modelPost
-      .create({
-        content: req.body.content,
-        UserId: userId.id,
-      })
-      .then((post) =>
-        res.status(201).json({ message: "Message publié avec succés", post })
-      )
-      .catch((error) => {
-        res.status(500).json(error);
-      });
+  try {
+    const userId = await modelUser.findOne({ where: { id: req.auth.userId } });
+    if (userId.id === req.auth.userId) {
+      if (req.file) {
+        modelPost
+          .create({
+            content: req.body.content,
+            attachment: `${req.protocol}://${req.get("host")}/images/${
+              req.file.filename
+            }`,
+            UserId: userId.id,
+          })
+          .then((post) =>
+            res.status(201).json({
+              message: "Publication avec photo envoyée avec succés",
+              post,
+            })
+          )
+          .catch((error) => {
+            res.status(500).json(error);
+          });
+      } else {
+        modelPost
+          .create({
+            content: req.body.content,
+            UserId: userId.id,
+          })
+          .then((post) =>
+            res
+              .status(201)
+              .json({ message: "Message publié avec succés", post })
+          )
+          .catch((error) => {
+            res.status(500).json(error);
+          });
+      }
+    } else {
+      return res.status(401).json({ error: "Aucune autorisation" });
+    }
+  } catch {
+    return res.status(400).json({ error: "petit probleme" });
   }
 };
 
@@ -100,7 +110,9 @@ exports.updatePost = async (req, res) => {
 exports.deletePost = async (req, res) => {
   try {
     const post = await modelPost.findOne({ where: { id: req.params.id } });
-    if (post.UserId === req.auth.userId) {
+    const user = await modelUser.findOne({ where: { id: req.auth.userId } });
+    console.log(user.isAdmin);
+    if (post.UserId === req.auth.userId || user.isAdmin !== null) {
       modelCom.destroy({ where: { PostId: post.id } }).then(() => {
         if (post.attachment) {
           const filename = post.attachment.split("/images/")[1];

@@ -4,19 +4,27 @@ const modelUser = model.User;
 const modelPost = model.Post;
 
 exports.createComs = async (req, res) => {
-  const user = await modelUser.findOne({ where: { id: req.auth.userId } });
-  const post = await modelPost.findOne({ where: { id: req.params.id } });
+  try {
+    const user = await modelUser.findOne({ where: { id: req.auth.userId } });
+    const post = await modelPost.findOne({ where: { id: req.params.id } });
 
-  const comment = new modelComs({
-    ...req.body,
-    UserId: user.id,
-    PostId: post.id,
-  });
+    if (user.id === req.params.id) {
+      const comment = new modelComs({
+        ...req.body,
+        UserId: user.id,
+        PostId: post.id,
+      });
 
-  comment
-    .save()
-    .then(() => res.status(200).json({ message: "message créé" }))
-    .catch((err) => res.status(400).json({ err }));
+      comment
+        .save()
+        .then(() => res.status(200).json({ message: "message créé" }))
+        .catch((err) => res.status(400).json({ err }));
+    } else {
+      return res.status(401).json({ error: "aucune autorisation" });
+    }
+  } catch {
+    return res.status(400).json({ error: "petit  probleme" });
+  }
 };
 
 exports.getAllComs = (req, res) => {
@@ -44,9 +52,19 @@ exports.updateCom = (req, res, next) => {
     .catch((err) => res.status(400).json({ err }));
 };
 
-exports.deleteCom = (req, res) => {
-  modelComs
-    .destroy({ where: { id: req.params.id } })
-    .then(() => res.status(200).json({ message: "com effacé" }))
-    .catch((err) => res.status(400).json({ err }));
+exports.deleteCom = async (req, res) => {
+  try {
+    const user = await modelUser.findOne({ where: { id: req.auth.userId } });
+    const com = await modelComs.findOne({ where: { id: req.params.id } });
+    if (com.UserId === req.auth.userId || user.isAdmin !== null) {
+      modelComs
+        .destroy({ where: { id: req.params.id } })
+        .then(() => res.status(200).json({ message: "com effacé" }))
+        .catch((err) => res.status(400).json({ err }));
+    } else {
+      return res.status(401).json({ error: "Pas autorisé" });
+    }
+  } catch {
+    return res.status(400).json({ error: "petit problème" });
+  }
 };
