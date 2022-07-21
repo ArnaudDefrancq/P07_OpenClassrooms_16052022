@@ -56,7 +56,7 @@ exports.getAllPosts = (req, res) => {
       include: [
         {
           model: modelUser,
-          attributes: ["id", "pseudo"],
+          attributes: ["id", "pseudo", "isAdmin"],
         },
         {
           model: modelCom,

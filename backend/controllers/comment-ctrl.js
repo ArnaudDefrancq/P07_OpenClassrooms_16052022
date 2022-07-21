@@ -8,20 +8,16 @@ exports.createComs = async (req, res) => {
     const user = await modelUser.findOne({ where: { id: req.auth.userId } });
     const post = await modelPost.findOne({ where: { id: req.params.id } });
 
-    if (user.id === req.params.id) {
-      const comment = new modelComs({
-        ...req.body,
-        UserId: user.id,
-        PostId: post.id,
-      });
+    const comment = new modelComs({
+      ...req.body,
+      UserId: user.id,
+      PostId: post.id,
+    });
 
-      comment
-        .save()
-        .then(() => res.status(200).json({ message: "message créé" }))
-        .catch((err) => res.status(400).json({ err }));
-    } else {
-      return res.status(401).json({ error: "aucune autorisation" });
-    }
+    comment
+      .save()
+      .then(() => res.status(200).json({ message: "message créé" }))
+      .catch((err) => res.status(400).json({ err }));
   } catch {
     return res.status(400).json({ error: "petit  probleme" });
   }
@@ -56,7 +52,9 @@ exports.deleteCom = async (req, res) => {
   try {
     const user = await modelUser.findOne({ where: { id: req.auth.userId } });
     const com = await modelComs.findOne({ where: { id: req.params.id } });
-    if (com.UserId === req.auth.userId || user.isAdmin !== null) {
+
+    if (com.UserId === req.auth.userId || user.isAdmin) {
+      console.log("bonjour");
       modelComs
         .destroy({ where: { id: req.params.id } })
         .then(() => res.status(200).json({ message: "com effacé" }))
