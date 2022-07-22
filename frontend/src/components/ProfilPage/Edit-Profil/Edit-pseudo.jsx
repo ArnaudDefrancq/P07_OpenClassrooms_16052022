@@ -1,10 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import axios from "axios";
 
 const EditPseudo = ({ user }) => {
-  const [pseudoUpdate, setPseudoUpdate] = useState();
+  const [pseudoUpdate, setPseudoUpdate] = useState(user.pseudo);
+  const refSignupPseudoError = useRef();
+  const refSignupPseudo = useRef();
 
   const userToken = document.cookie;
 
@@ -14,22 +16,35 @@ const EditPseudo = ({ user }) => {
       authorization: `bearer ${jwt[1]}`,
     },
   };
+  const checkPseudo = (pseudo) => {
+    if (/^[a-zA-Z0-9\s]{3,40}$/.test(pseudo)) {
+      refSignupPseudoError.current.textContent = " ";
+      return true;
+    } else {
+      refSignupPseudoError.current.textContent =
+        "Votre pseudo doit faire entre 3 et 30 caractères";
+      return false;
+    }
+  };
 
   const updateProfil = async (e) => {
     e.preventDefault();
+    if (checkPseudo(pseudoUpdate)) {
+      const newPseudo = { pseudo: pseudoUpdate };
 
-    const newPseudo = { pseudo: pseudoUpdate };
+      await axios
+        .put(
+          `${process.env.REACT_APP_API_URL}api/user/update/${user.id}`,
+          newPseudo,
+          config
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
 
-    await axios
-      .put(
-        `${process.env.REACT_APP_API_URL}api/user/update/${user.id}`,
-        newPseudo,
-        config
-      )
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-
-    window.location.reload();
+      window.location.reload();
+    } else {
+      return console.log("problleme");
+    }
   };
 
   return (
@@ -45,9 +60,12 @@ const EditPseudo = ({ user }) => {
           defaultValue={user.pseudo}
           onChange={(e) => {
             setPseudoUpdate(e.target.value);
+            checkPseudo(e.target.value);
           }}
+          ref={refSignupPseudo}
         />
       </div>
+      <div ref={refSignupPseudoError} className="signup-error"></div>
 
       <div className="form--input--container">
         <label htmlFor="pseudo" className="form--label">
@@ -55,7 +73,7 @@ const EditPseudo = ({ user }) => {
         </label>
         <input
           type="email"
-          value={user.email}
+          defaultValue={user.email}
           id="pseudo"
           className="form--input"
           disabled
