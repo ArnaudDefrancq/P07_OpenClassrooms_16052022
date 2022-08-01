@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import EditPseudo from "./Edit-Profil/Edit-pseudo";
 import DeleteProfil from "./Edit-Profil/Delete-Profil";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const User = () => {
   const [loadUser, setLoaduser] = useState([]);
